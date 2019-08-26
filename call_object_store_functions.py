@@ -13,7 +13,7 @@ from iconsdk.builder.transaction_builder import (
 from iconsdk.signed_transaction import SignedTransaction
 from iconsdk.builder.call_builder import CallBuilder
 
-scoreAddress = "cxfd38ce83c8420da0177980cf241ca41f3d5cfc9d"
+scoreAddress = "cxc6c0e79fd57c46c4101a2a786479a84fad45505d" #<-- Replace with your score address
 
 wallet = KeyWallet.load("./keystore_test1", "test1_Account")
 
@@ -60,8 +60,6 @@ writeTransaction("vote", {"name": "Tomaz"})
 print("---------------------------")
 print("---------------------------")
 readTransaction("getCurrentStateOfElection", {})
-
-
 
 
 print("SUCCESS!")

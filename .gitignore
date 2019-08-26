@@ -167,4 +167,13 @@ dmypy.json
 # Ignore all local history of files
 .history
 
+### SCORE ###
+.score
+.statedb
+exc
+keystore_test1
+tbears_cli_config.json
+tbears_server_config.json
+
+
 # End of https://www.gitignore.io/api/macos,python,visualstudiocode
