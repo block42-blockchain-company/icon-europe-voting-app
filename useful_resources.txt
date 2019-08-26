@@ -1,0 +1,25 @@
+-installation:
+https://stackoverflow.com/questions/51726203/installing-python3-6-alongside-python3-7-on-mac
+https://stackoverflow.com/questions/56645275/pip3-installation-error-with-the-iconservice-package
+https://github.com/bitcoin-core/secp256k1
+https://www.icondev.io/discuss/5d00e456ea3f4a0057b930fe //pip install secp256k1new
+https://github.com/icon-project/t-bears //don't forget to start rabbitmq with 'brew services start rabbitmq'!
+
+https://www.icondev.io/docs/how-to-change-network-in-iconex
+
+https://stackoverflow.com/questions/23439126/how-to-mount-a-host-directory-in-a-docker-container
+
+-tutorial:
+https://medium.com/@2infiniti/creating-icon-dapp-from-a-z-part-1-tools-environment-dd56f8dfc905
+https://www.icondev.io/docs/score-overview
+
+-commands:
+docker run -it --name local-tbears -p 9000:9000 -v ~/development/dlt-comparison/icon:/work iconloop/tbears:mainnet
+brew switch python 3.6.5_1
+
+-excerpts from https://www.icondev.io/docs/writing-score:
+<<DictDB does not maintain order, whereas ArrayDB, which supports length and iterator, maintains order.>>
+
+<<VarDB, DictDB, and ArrayDB are utility classes wrapping the state database.
+A key can be numbers or characters, and value_type can be int, str, bytes and Address.
+If the key does not exist, the wrapping classes return the zero value of value_type, which is 0 for int, "" for str, and None for bytes or Address.>>
