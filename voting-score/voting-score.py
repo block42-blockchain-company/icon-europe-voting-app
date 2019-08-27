@@ -6,8 +6,6 @@ from .poll import Poll
 
 TAG = 'VotingScore'
 
-#local_scole_address = cxc6c0e79fd57c46c4101a2a786479a84fad45505d
-
 class VotingScore(IconScoreBase):
 
     def __init__(self, db: IconScoreDatabase) -> None:
@@ -21,19 +19,48 @@ class VotingScore(IconScoreBase):
         super().on_update()
 
     @external
-    def createPoll(self, name: str, candidates: bytes) -> None:
-        new_poll = Poll(name)
-        candidates = loads(candidates)
-
-        for candidate in candidates:
-            new_poll.addCandidate(candidate)
+    def createPoll(self, poll_name: str) -> None:
+        new_poll = Poll(self.generatePollID(), poll_name)
         self.polls_.put(dumps(new_poll))
 
     @external
-    def getPoll(self, name: str) -> bytes:
-        for poll in self.polls_:
-            if poll.name == name:
-                return dumps(poll)
+    def generatePollID(self) -> int:
+        # How to generate ID´s for the polls properly?
+        return len(loads(self.polls_)) + 1
+
+    @external
+    def getPollByName(self, poll_name: str) -> dict:
+        poll = Poll()
+        for temp_poll in self.polls_:
+            if loads(temp_poll).name_ == poll_name:
+                poll = loads(temp_poll)
+                break
+
+        return {
+                "id": poll.id_,
+                "name": poll.name_,
+                "description": poll.description_,
+                "candidates": poll.candidates_
+                }
+
+    @external
+    def getPollById(self, poll_id: int) -> dict:
+        pass
+
+    @external
+    def getPolls(self) -> int:
+        return len(self.polls_)
+
+    @external
+    def addPollOption(self, poll_option: str) -> None:
+        current_poll = loads(self.polls_.get(0))
+        current_poll.addCandidate(poll_option)
+        self.polls_[0] = dumps(current_poll)
+
+    @external
+    def getPollOptions(self) -> dict:
+        return loads(self.polls_.get(0)).candidates_;
+
     @external
     def vote(self, poll_name: str, candidate_name: str) -> None:
         loads(self.getPoll(poll_name)).vote(candidate_name)
