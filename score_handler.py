@@ -51,39 +51,3 @@ class ScoreHandler:
         result = self.icon_service.get_transaction_result(tx_hash)
         print(result)
         return result
-
-
-
-score_address = "cxf68897091500f05beb5cece709e330f4664386c8" #<-- Replace with your score address
-keystore_file = "./keystore_test1"
-password = "@icon123"
-
-score_handler = ScoreHandler(score_address, keystore_file, password);
-
-
-#candidates = [ "Satoshi Nakamoto", "Bob Marley", "Donald Trump"]
-
-poll_details = {
-              "name" : "poll name",
-              "candidate1": "Satoshi Nakamoto",
-              "candidate2": "Bob Marley",
-              "candidate3": "Donald Trump"}
-
-json_obj = {
-  "poll_name": "President elections",
-  "candidates": ["Satoshi Nakamoto", "Bob Marley", "Donald Trump"]
-}
-
-poll_option = { "poll_option" : "Satoshi Nakamoto"}
-poll_option1 = { "poll_option" : "Bob Marley"}
-poll_option2 = { "poll_option" : "Donald Trump"}
-
-poll_name = {"poll_name": "President elections"}
-
-score_handler.writeTransaction("createPoll", poll_name)
-# score_handler.writeTransaction("addPollOption", poll_option)
-# score_handler.writeTransaction("addPollOption", poll_option1)
-# score_handler.writeTransaction("addPollOption", poll_option2)
-score_handler.readTransaction("getPolls", {})
-score_handler.readTransaction("getPollByName", poll_name)
-score_handler.readTransaction("getPollOptions", {})

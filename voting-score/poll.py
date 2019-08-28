@@ -11,6 +11,17 @@ class Poll:
     def vote(self, name: str) -> None:
         self.candidates_[name] = self.candidates_[name] + 1
 
+    def getData(self) -> dict:
+        return {
+                "id": self.id_,
+                "name": self.name_,
+                "description": self.description_,
+                "candidates": self.candidates_
+                }
+
+    def getId(self) -> int:
+        return self.id_
+
     def getCandidates(self) -> dict:
         return self.candidates_
 

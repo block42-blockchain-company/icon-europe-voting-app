@@ -26,30 +26,43 @@ class VotingScore(IconScoreBase):
     @external
     def generatePollID(self) -> int:
         # How to generate ID´s for the polls properly?
-        return len(loads(self.polls_)) + 1
+        return len(self.polls_) + 1
 
+    @external
+    def removePoll(self, poll_id: int) -> bool:
+        self.polls_.pop()
+
+    @external
+    def removeAllPolls(self) -> None:
+        for poll in self.polls_:
+            self.polls_.pop()
+
+    # --------------------------------------------------------------------------
+    # # BUG:  Need to work on this one, since 2 polls could have the same name
+    # --------------------------------------------------------------------------
     @external
     def getPollByName(self, poll_name: str) -> dict:
         poll = Poll()
+
         for temp_poll in self.polls_:
             if loads(temp_poll).name_ == poll_name:
                 poll = loads(temp_poll)
                 break
 
-        return {
-                "id": poll.id_,
-                "name": poll.name_,
-                "description": poll.description_,
-                "candidates": poll.candidates_
-                }
+        return poll.getData()
 
     @external
     def getPollById(self, poll_id: int) -> dict:
         pass
 
     @external
-    def getPolls(self) -> int:
-        return len(self.polls_)
+    def getPolls(self) -> list:
+        polls = list()
+
+        for poll in self.polls_:
+            polls.append(loads(poll).getData())
+
+        return polls
 
     @external
     def addPollOption(self, poll_option: str) -> None:
@@ -59,7 +72,7 @@ class VotingScore(IconScoreBase):
 
     @external
     def getPollOptions(self) -> dict:
-        return loads(self.polls_.get(0)).candidates_;
+        return loads(self.polls_.get(0)).candidates_
 
     @external
     def vote(self, poll_name: str, candidate_name: str) -> None:
