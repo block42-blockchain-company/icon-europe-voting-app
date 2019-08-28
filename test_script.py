@@ -6,38 +6,52 @@ if __name__ == "__main__":
     # cxf68897091500f05beb5cece709e330f4664386c8 --> old
     # cx8fbe6da6369935db85970b8da8798526276982a4 ---> new one
 
-    score_address = "cx8fbe6da6369935db85970b8da8798526276982a4" #<-- Replace with your score address
-    keystore_file = "./keystore_test1"
+    # cx3720aa917514d93ba30152cfd5054fbb557a5bd8 <--- unsused one with 4 empty polls
+
+    score_address = "cxd91ea0848abc17fe4cef4385ace413053cdf9c2d" #<-- Replace with your score address
+    keystore_file = "./keystore_test2"
     password = "@icon123"
 
 
     score_handler = ScoreHandler(score_address, keystore_file, password);
 
 
-    #candidates = [ "Satoshi Nakamoto", "Bob Marley", "Donald Trump"]
+    # Sample for creating poll
+    create_poll = {"poll_name": "President elections"}
 
-    poll_details = {
-                  "name" : "poll name",
-                  "candidate1": "Satoshi Nakamoto",
-                  "candidate2": "Bob Marley",
-                  "candidate3": "Donald Trump"}
+    # Sample for creating polls entries
+    # {poll_id : int
+    #  poll_entry : string}
+    poll_option = {
+                "poll_id": "0",
+                "poll_entry": "Satoshi Nakomoto"
+                }
+    poll_option1 = {
+                "poll_id": "0",
+                "poll_entry": "Bob Marley"
+                }
+    poll_option2 = {
+                "poll_id": "0",
+                "poll_entry": "Donald Trump"
+                }
 
-    json_obj = {
-      "poll_name": "President elections",
-      "candidates": ["Satoshi Nakamoto", "Bob Marley", "Donald Trump"]
-    }
+    # Vote sample object
+    # {poll_id : candidate_id,
+    #  poll_entry_id : }
+    vote_obj = {
+            "poll_id": "0",
+            "poll_entry_id": "0"
+            }
 
-    poll_option = { "poll_option" : "Satoshi Nakamoto"}
-    poll_option1 = { "poll_option" : "Bob Marley"}
-    poll_option2 = { "poll_option" : "Donald Trump"}
-
-    poll_name = {"poll_name": "President elections day 2"}
-
-    score_handler.writeTransaction("createPoll", poll_name)
-    # score_handler.writeTransaction("addPollOption", poll_option)
+    # score_handler.writeTransaction("createPoll", create_poll)
+    score_handler.writeTransaction("createPoll", create_poll)
+    score_handler.writeTransaction("addPollOption", poll_option)
     # score_handler.writeTransaction("addPollOption", poll_option1)
     # score_handler.writeTransaction("addPollOption", poll_option2)
-    score_handler.readTransaction("getPolls", {})
-    score_handler.readTransaction("removePoll", {"poll_id": "0"})
+    score_handler.readTransaction("exportPolls", {})
+    # score_handler.readTransaction("getSenderBalance", {})
+    score_handler.writeTransaction("vote", vote_obj)
+    score_handler.readTransaction("exportPolls", {})
+    # score_handler.readTransaction("removePoll", {"poll_id": "0"})
     # score_handler.readTransaction("getPollByName", poll_name)
     # score_handler.readTransaction("getPollOptions", {})

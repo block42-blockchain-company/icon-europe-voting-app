@@ -6,6 +6,7 @@ from .poll import Poll
 
 TAG = 'VotingScore'
 
+
 class VotingScore(IconScoreBase):
 
     def __init__(self, db: IconScoreDatabase) -> None:
@@ -25,8 +26,7 @@ class VotingScore(IconScoreBase):
 
     @external
     def generatePollID(self) -> int:
-        # How to generate ID´s for the polls properly?
-        return len(self.polls_) + 1
+        return len(self.polls_)
 
     @external
     def removePoll(self, poll_id: int) -> bool:
@@ -37,11 +37,33 @@ class VotingScore(IconScoreBase):
         for poll in self.polls_:
             self.polls_.pop()
 
+    @external
+    def exportPolls(self) -> list:
+        """
+        Export all polls in the SCORE and makes it human readable
+        """
+        polls = list()
+
+        for poll in self.polls_:
+            polls.append(loads(poll).getData())
+
+        return polls
+
+    @external
+    def exportPollById(self, poll_id: int) -> dict:
+        """
+        Export one and only specific Poll from SCORE
+        """
+        pass
+
     # --------------------------------------------------------------------------
     # # BUG:  Need to work on this one, since 2 polls could have the same name
     # --------------------------------------------------------------------------
     @external
-    def getPollByName(self, poll_name: str) -> dict:
+    def exportPollsByName(self, poll_name: str) -> dict:
+        """
+        Exports 0,1 or more human-readable Polls
+        """
         poll = Poll()
 
         for temp_poll in self.polls_:
@@ -52,28 +74,25 @@ class VotingScore(IconScoreBase):
         return poll.getData()
 
     @external
-    def getPollById(self, poll_id: int) -> dict:
-        pass
-
-    @external
-    def getPolls(self) -> list:
-        polls = list()
-
-        for poll in self.polls_:
-            polls.append(loads(poll).getData())
-
-        return polls
-
-    @external
-    def addPollOption(self, poll_option: str) -> None:
-        current_poll = loads(self.polls_.get(0))
-        current_poll.addCandidate(poll_option)
-        self.polls_[0] = dumps(current_poll)
+    def addPollOption(self, poll_id: int, poll_entry: str) -> None:
+        current_poll = loads(self.polls_.get(poll_id - 1))
+        current_poll.addCandidate(poll_entry)
+        self.polls_[poll_id - 1] = dumps(current_poll)
 
     @external
     def getPollOptions(self) -> dict:
         return loads(self.polls_.get(0)).candidates_
 
     @external
-    def vote(self, poll_name: str, candidate_name: str) -> None:
-        loads(self.getPoll(poll_name)).vote(candidate_name)
+    def getSenderBalance(self) -> int:
+        return self.icx.get_balance(self.msg.sender)
+
+    @external
+    def vote(self, poll_id: int, poll_entry_id: str) -> None:
+        sender_balance = self.icx.get_balance(self.msg.sender)
+        if(sender_balance > 0):
+            poll = loads(self.polls_.get(poll_id - 1))
+            poll.vote(poll_entry_id, sender_balance)
+            self.polls_[poll_id - 1] = dumps(poll)
+        else:
+            revert("Throw some fking exception. Like, no founds, you poor MOFO")
