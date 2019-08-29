@@ -24,7 +24,7 @@ class Poll:
 
     def getCandidateById(self, id: int):
         for candidate in self.__candidates:
-            if candidate["id"] == id:
+            if candidate["id"] == int(id):
                 return candidate
 
     def getName(self) -> str:

@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
     # cx3720aa917514d93ba30152cfd5054fbb557a5bd8 <--- unsused one with 4 empty polls
 
-    score_address = "cxd91ea0848abc17fe4cef4385ace413053cdf9c2d" #<-- Replace with your score address
+    score_address = "cxcd3e29312307f1c9bbe3790609342797c4cc70ad" #<-- Replace with your score address
     keystore_file = "./keystore_test2"
     password = "@icon123"
 
@@ -40,18 +40,20 @@ if __name__ == "__main__":
     #  poll_entry_id : }
     vote_obj = {
             "poll_id": "0",
-            "poll_entry_id": "0"
-            }
+            "poll_entry_id": "1"
+                }
 
+    get_poll_options = { "poll_id": "0"}
+
+    # score_handler.writeTransaction("createPoll", create_polls
     # score_handler.writeTransaction("createPoll", create_poll)
-    score_handler.writeTransaction("createPoll", create_poll)
-    score_handler.writeTransaction("addPollOption", poll_option)
+    # score_handler.writeTransaction("addPollOption", poll_options
     # score_handler.writeTransaction("addPollOption", poll_option1)
     # score_handler.writeTransaction("addPollOption", poll_option2)
-    score_handler.readTransaction("exportPolls", {})
+    # score_handler.readTransaction("exportPolls", {})
     # score_handler.readTransaction("getSenderBalance", {})
     score_handler.writeTransaction("vote", vote_obj)
-    score_handler.readTransaction("exportPolls", {})
+    # score_handler.readTransaction("exportPolls", {})
     # score_handler.readTransaction("removePoll", {"poll_id": "0"})
     # score_handler.readTransaction("getPollByName", poll_name)
-    # score_handler.readTransaction("getPollOptions", {})
+    score_handler.readTransaction("getPollOptions", get_poll_options)

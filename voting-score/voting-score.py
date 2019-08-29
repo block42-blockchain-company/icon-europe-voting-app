@@ -80,8 +80,8 @@ class VotingScore(IconScoreBase):
         self.polls_[poll_id - 1] = dumps(current_poll)
 
     @external
-    def getPollOptions(self) -> dict:
-        return loads(self.polls_.get(0)).candidates_
+    def getPollOptions(self, poll_id: int) -> dict:
+        return loads(self.polls_.get(poll_id)).getCandidates()
 
     @external
     def getSenderBalance(self) -> int:
@@ -95,4 +95,4 @@ class VotingScore(IconScoreBase):
             poll.vote(poll_entry_id, sender_balance)
             self.polls_[poll_id - 1] = dumps(poll)
         else:
-            revert("Throw some fking exception. Like, no founds, you poor MOFO")
+            revert("Throw some fking exception. Like ´no founds, you poor MOFO´")
