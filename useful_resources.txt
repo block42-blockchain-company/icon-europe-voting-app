@@ -13,8 +13,11 @@ https://stackoverflow.com/questions/23439126/how-to-mount-a-host-directory-in-a-
 https://medium.com/@2infiniti/creating-icon-dapp-from-a-z-part-1-tools-environment-dd56f8dfc905
 https://www.icondev.io/docs/score-overview
 
+coding:
+https://www.knowledgehut.com/tutorials/python-tutorial/python-object-serialization
+
 -commands:
-docker run -it --name local-tbears -p 9000:9000 -v ~/development/dlt-comparison/icon:/work iconloop/tbears:mainnet
+docker run -it --name local-tbears -p 9000:9000 -v ~/development//icon:/work iconloop/tbears:mainnet
 brew switch python 3.6.5_1
 
 -excerpts from https://www.icondev.io/docs/writing-score:

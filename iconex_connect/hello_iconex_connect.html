@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>I'm an Icon</title>
+</head>
+<body>
+  <h1>I bin da Wirtshaus-Paul!</h1>
+  <h2>Fia a Schnitzl brauchst ICX.</h2>
+  <h2>Oiso, host a address?</h2>
+  <h2>Dei ICX Address:</h2>
+  <button id="getAddress">REQUEST_ADDRESS</button>
+  <h2 id="address">?</h2>
+  <h2 id="answer" style="font-style: italic">Kane ICX? Aussi mit dir!</h2>
+
+  <script src="http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
+  <script>
+    var getAddressButton = document.getElementById("getAddress")
+    var addressTag = document.getElementById("address")
+    var answerTag = document.getElementById("answer")
+    window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+    function eventHandler(event) {
+      var type = event.detail.type
+      var payload = event.detail.payload
+
+      switch (type) {
+        case "RESPONSE_ADDRESS":
+          fromAddress = payload
+          addressTag.innerHTML = "your address: " + payload;
+
+          if(payload != 0) {
+            answerTag.innerHTML = "Jawohl gnua Geld - Mahlzeit!"              
+          }
+          break
+        default:
+    }
+  }
+
+  getAddressButton.onclick = function () {
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+          type: 'REQUEST_ADDRESS'
+      }
+    }))
+  }
+  </script>
+</body>
+</html>
