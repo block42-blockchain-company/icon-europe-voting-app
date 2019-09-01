@@ -1,6 +1,6 @@
-# icon-europe-voting-app
-Community governance tool to incorporate european ICONists into the decision making process of its beloved P-Reps
+# Voting dApp for ICON Europe 🇪🇺🗳
 
+Community governance tool to incorporate european ICONists into the decision making process of its beloved P-Reps
 
 Execute command bellow, which creates, runs and attaches to docker container.
 
