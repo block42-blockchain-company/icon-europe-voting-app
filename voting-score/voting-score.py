@@ -24,7 +24,6 @@ class VotingScore(IconScoreBase):
         new_poll = Poll(self.generatePollID(), poll_name, poll_question)
         self.polls_.put(dumps(new_poll))
 
-    @external
     def generatePollID(self) -> int:
         return len(self.polls_)
 
@@ -37,7 +36,7 @@ class VotingScore(IconScoreBase):
         for poll in self.polls_:
             self.polls_.pop()
 
-    @external
+    @external(readonly=True)
     def exportPolls(self) -> list:
         """
         Export all polls in the SCORE and makes it human readable
@@ -49,7 +48,7 @@ class VotingScore(IconScoreBase):
 
         return polls
 
-    @external
+    @external(readonly=True)
     def exportPollById(self, poll_id: int) -> dict:
         """
         Export one and only specific Poll from SCORE
@@ -59,7 +58,7 @@ class VotingScore(IconScoreBase):
     # --------------------------------------------------------------------------
     # # BUG:  Need to work on this one, since 2 polls could have the same name
     # --------------------------------------------------------------------------
-    @external
+    @external(readonly=True)
     def exportPollsByName(self, poll_name: str) -> dict:
         """
         Exports 0,1 or more human-readable Polls
@@ -79,11 +78,11 @@ class VotingScore(IconScoreBase):
         current_poll.addCandidate(poll_entry)
         self.polls_[poll_id - 1] = dumps(current_poll)
 
-    @external
+    @external(readonly=True)
     def getPollOptions(self, poll_id: int) -> dict:
         return loads(self.polls_.get(poll_id)).getCandidates()
 
-    @external
+    @external(readonly=True)
     def getSenderBalance(self) -> int:
         return self.icx.get_balance(self.msg.sender)
 
@@ -95,4 +94,4 @@ class VotingScore(IconScoreBase):
             poll.vote(poll_entry_id, sender_balance)
             self.polls_[poll_id - 1] = dumps(poll)
         else:
-            revert("Throw some fking exception. Like ´no founds, you poor MOFO´")
+            revert("Throw some fking exception. Like ´no founds, my dear´")

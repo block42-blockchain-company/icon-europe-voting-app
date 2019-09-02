@@ -8,9 +8,9 @@ if __name__ == "__main__":
 
     # cx3720aa917514d93ba30152cfd5054fbb557a5bd8 <--- unsused one with 4 empty polls
 
-    score_address = "cx08bed0a6999a6c3f866d26c1be67e3e1139ba75a" #<-- Replace with your score address
-    keystore_file = "./keystore_test2"
-    password = "@icon123"
+    score_address = "cxf2de4a1813bad480b843db8152f34e22aa40998c" #<-- Replace with your score address
+    keystore_file = "./keystore_test1"
+    password = "test1_Account"
 
 
     score_handler = ScoreHandler(score_address, keystore_file, password);
