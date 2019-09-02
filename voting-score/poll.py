@@ -1,9 +1,16 @@
+import datetime as DT
+
+
 class Poll:
-    def __init__(self, id = -1, name = "default" ) -> None:
+    def __init__(self, id: int, name: str, question: str) -> None:
         self.__id = id
         self.__name = name
+        self.__question = question
         self.__description = str()
         self.__candidates = list()
+        self.__start = DT.date.today().strftime("%d/%m/%Y")
+        self.__end = (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")
+        self.__can_modify = True
 
     def addCandidate(self, name: str) -> None:
         new_candidate = dict()
@@ -34,6 +41,9 @@ class Poll:
         return {
                 "id": self.__id,
                 "name": self.__name,
+                "question": self.__question,
                 "description": self.__description,
-                "candidates": self.__candidates
+                "candidates": self.__candidates,
+                "start_date": self.__start,
+                "end_date": self.__end,
                 }

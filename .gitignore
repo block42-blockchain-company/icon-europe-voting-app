@@ -172,6 +172,7 @@ dmypy.json
 .statedb
 exc
 keystore_test1
+keystore_test2
 tbears_cli_config.json
 tbears_server_config.json
 

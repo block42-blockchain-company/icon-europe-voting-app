@@ -20,8 +20,8 @@ class VotingScore(IconScoreBase):
         super().on_update()
 
     @external
-    def createPoll(self, poll_name: str) -> None:
-        new_poll = Poll(self.generatePollID(), poll_name)
+    def createPoll(self, poll_name: str, poll_question: str) -> None:
+        new_poll = Poll(self.generatePollID(), poll_name, poll_question)
         self.polls_.put(dumps(new_poll))
 
     @external

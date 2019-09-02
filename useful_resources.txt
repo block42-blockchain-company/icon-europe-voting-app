@@ -26,6 +26,8 @@ https://battlebombroyale.com/
 docker run -it --name local-tbears -p 9000:9000 -v ~/development//icon:/work iconloop/tbears:mainnet
 brew switch python 3.6.5_1
 
+docker run -dit --name apache -p 8080:80 -v /Users/tomaz/Dev/Icon/icon-europe-voting-app/web/:/usr/local/apache2/htdocs/ httpd:2.4
+
 -excerpts from https://www.icondev.io/docs/writing-score:
 <<DictDB does not maintain order, whereas ArrayDB, which supports length and iterator, maintains order.>>
 
