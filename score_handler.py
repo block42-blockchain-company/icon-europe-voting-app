@@ -26,7 +26,6 @@ class ScoreHandler:
 
     def readTransaction(self, method: str, params: []) -> {}:
         call = CallBuilder()\
-                        .from_(self.wallet_.get_address())\
                         .to(self.score_address_)\
                         .method(method)\
                         .params(params)\
