@@ -11,7 +11,10 @@
     <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
     <!--- Bootstrap -->
     <link rel="stylesheet" href="/src/libs/bootstrap/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- <script src="/src/libs/bootstrap/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+    <!-- <script src="/src/libs/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!--- Source files -->
     <script src="src/client/keystore.js" defer></script>
@@ -42,13 +45,13 @@
       <!-- listt all polls -->
       <section id="polls-list">
         <div class="container">
-          <table class="table table-borderless table-striped" id="polls-table">
+          <table class="table table-hover table-striped" id="polls-table">
             <thead class="thead-dark">
               <tr>
-                <!-- <th scope="col">#</th> -->
                 <th scope="col">Title:</th>
                 <th scope="col">Created:</th>
                 <th scope="col">Last till:</th>
+                <th scope="col">Author:</th>
               </tr>
             </thead>
             <tbody>
@@ -58,8 +61,34 @@
       </section>
 
 
+      <!-- modal -->
+      <div id="poll-modal" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
 
+            <div class="jumbotron jumbotron-fluid text-center">
+              <div class="container">
+                <h1 class="display-5 poll-title"></h1>
+                <hr class="my-4">
+                <h1 class="display-5 poll-question"></h1>
+              </div>
+            </div>
 
+            <div class="list-group">
+              <button type="button" class="list-group-item list-group-item-action active">
+                Cras justo odio
+              </button>
+              <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
+              <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
+              <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
+              <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Vote</button>
+
+          </div>
+        </div>
+      </div>
 
 
   </body>
