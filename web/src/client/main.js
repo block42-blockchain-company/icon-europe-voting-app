@@ -3,13 +3,13 @@ class Poll
 {
   constructor( poll_info )
   {
-    this._id = poll_info.id;
-    this._name = poll_info.name;
-    this._question = poll_info.question;
-    this._start_date = poll_info.start_date;
-    this._end_date = poll_info.end_date;
-    this._description = poll_info.description;
-    this._candidates = poll_info.candidates;
+    this.id = poll_info.id;
+    this.name = poll_info.name;
+    this.question = poll_info.question;
+    this.start_date = poll_info.start_date;
+    this.end_date = poll_info.end_date;
+    this.description = poll_info.description;
+    this.candidates = poll_info.candidates;
   }
 
   render()
@@ -19,8 +19,14 @@ class Poll
 
     for( var key in this)
     {
-      let cell = row.insertCell();
-      cell.appendChild(document.createTextNode(this[key]));
+      // let cell = ;
+
+      if( key == "name")
+        row.insertCell().appendChild(document.createTextNode(this[key]));
+      else if ( key == "start_date")
+        row.insertCell().appendChild(document.createTextNode(this[key]));
+      else if ( key == "end_date")
+        row.insertCell().appendChild(document.createTextNode(this[key]));
     }
   }
 }
@@ -32,7 +38,7 @@ var polls = [];
 
 function storePolls( polls_data )
 {
-  console.log(polls_data);
+  // console.log(polls_data);
   for( var it in polls_data)
   {
     var poll = new Poll(polls_data[it])
