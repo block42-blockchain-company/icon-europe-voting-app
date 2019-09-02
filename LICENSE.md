@@ -1,16 +1,3 @@
-# Voting dApp for ICON Europe 🇪🇺🗳
-
-Community governance tool to incorporate european ICONists into the decision making process of its P-Reps.
-
-Execute command bellow, which creates, runs and attaches to docker container.
-
-```
-docker run -it --name icon-europe-voting-app -p 9000:9000 -v <path/to/the/repo>:/work iconloop/tbears:mainnet
-```
-
-## License
-
-```
 MIT License
 
 Copyright (c) 2019 block42 Blockchain Company GmbH
@@ -32,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
