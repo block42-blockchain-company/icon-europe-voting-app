@@ -19,6 +19,7 @@
     <!--- Source files -->
     <script src="src/client/keystore.js" defer></script>
     <script src="src/client/ScoreHandler.js" defer></script>
+    <script src="src/client/poll.js" defer></script>
     <script src="src/client/main.js" defer></script>
 
   </head>
@@ -68,23 +69,38 @@
 
             <div class="jumbotron jumbotron-fluid text-center">
               <div class="container">
-                <h1 class="display-5 poll-title"></h1>
+                <h1 class="display-4 poll-title"></h1>
                 <hr class="my-4">
                 <h1 class="display-5 poll-question"></h1>
               </div>
             </div>
 
-            <div class="list-group">
-              <button type="button" class="list-group-item list-group-item-action active">
-                Cras justo odio
-              </button>
-              <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-              <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+            <div class="container">
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                  <label class="form-check-label" for="exampleRadios1">
+                    Default radio
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                  <label class="form-check-label" for="exampleRadios2">
+                    Second default radio
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+                  <label class="form-check-label" for="exampleRadios3">
+                    Disabled radio
+                  </label>
+                </div>
+
+              </div>
             </div>
 
-            <button class="btn btn-primary" type="submit">Vote</button>
+
+
 
           </div>
         </div>
