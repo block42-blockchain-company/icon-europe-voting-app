@@ -16,6 +16,12 @@ https://www.icondev.io/docs/score-overview
 coding:
 https://www.knowledgehut.com/tutorials/python-tutorial/python-object-serialization
 
+reference code:
+https://github.com/iconation/BattleBombRoyale
+
+games:
+https://battlebombroyale.com/
+
 -commands:
 docker run -it --name local-tbears -p 9000:9000 -v ~/development//icon:/work iconloop/tbears:mainnet
 brew switch python 3.6.5_1
@@ -26,3 +32,4 @@ brew switch python 3.6.5_1
 <<VarDB, DictDB, and ArrayDB are utility classes wrapping the state database.
 A key can be numbers or characters, and value_type can be int, str, bytes and Address.
 If the key does not exist, the wrapping classes return the zero value of value_type, which is 0 for int, "" for str, and None for bytes or Address.>>
+
