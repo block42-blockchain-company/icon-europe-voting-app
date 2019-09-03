@@ -1,4 +1,4 @@
-from ..voting-score import VotingScore
+from ..voting_score import VotingScore
 from tbears.libs.scoretest.score_test_case import ScoreTestCase
 
 

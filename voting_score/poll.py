@@ -10,7 +10,7 @@ class Poll:
         self.__candidates = list()
         self.__start = DT.date.today().strftime("%d/%m/%Y")
         self.__end = (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")
-        self.__can_modify = True
+        # self.__initiator
 
     def addCandidate(self, name: str) -> None:
         new_candidate = dict()

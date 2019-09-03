@@ -170,6 +170,8 @@ dmypy.json
 ### SCORE ###
 .score
 .statedb
+.testscore
+.teststatedb
 exc
 keystore_test1
 keystore_test2
