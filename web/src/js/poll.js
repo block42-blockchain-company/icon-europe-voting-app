@@ -35,14 +35,44 @@ class Poll
   openDetailView()
   {
       let poll = getPollByID( parseInt(this.id.split("-")[1])) //split id from string --> maybe write function to this???!?
+      let options_list = document.getElementById("options-list");
 
+      // insert name and question
       document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
       document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
 
+      //list voting options
+      for( var it in poll.candidates)
+      {
+
+        // if(it == 0 && options_list.children.length) //clear previous buttons
+        //   options_list.innerHTML = "";
 
 
-      $('#poll-modal').modal("toggle");
+        // //create button to vote
+        // let button = document.createElement("label");
+        //
+        // button.setAttribute("class", "btn btn-secondary");
+        // let input = document.createElement("input");
+        // input.setAttribute("type", "radio");
+        // input.setAttribute("autocomplete", "off");
+        // // input.setAttribute("name", "options");
+        // // input.setAttribute("id", "options");
+        //
+        // button.appendChild(input);
+        // button.innerHTML = poll.candidates[it].name;
 
 
+        // button.setAttribute("type", "button");
+        // options_list.appendChild(button);
+      }
+
+      $('#poll-modal').modal("show"); // toggle on modal
   }
+
+
+
+
+
+
 }
