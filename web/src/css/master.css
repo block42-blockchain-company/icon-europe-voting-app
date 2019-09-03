@@ -1,0 +1,12 @@
+nav {
+  background-color: #1aaaba !important;
+}
+
+nav span {
+  color : white;
+}
+
+nav img {
+  width: 2em;
+  height: 2em;
+}

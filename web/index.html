@@ -16,11 +16,14 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <!--- Source files -->
-    <script src="src/client/keystore.js" defer></script>
-    <script src="src/client/ScoreHandler.js" defer></script>
-    <script src="src/client/poll.js" defer></script>
-    <script src="src/client/main.js" defer></script>
+    <!--- JS Source files -->
+    <script src="src/js/keystore.js" defer></script>
+    <script src="src/js/ScoreHandler.js" defer></script>
+    <script src="src/js/poll.js" defer></script>
+    <script src="src/js/main.js" defer></script>
+
+    <!--- CSS Source files -->
+    <link rel="stylesheet" href="/src/css/master.css" >
 
   </head>
   <body>
@@ -30,6 +33,14 @@
           <a class="navbar-brand js-scroll-trigger" href="">Icon Polls</a>
         </div>
       </nav> -->
+
+      <!-- As a heading -->
+      <nav class="navbar">
+        <div class="container">
+          <span class="navbar-brand mb-0 h1"> <img src="src/img/icon.png"> Icon Polls</span>
+          <button type="button" class="btn btn-sm btn-outline-light btn-wallet">Connect to ICX wallet</button>
+        </div>
+      </nav>
 
       <!-- jumbotron -->
       <section id="">
@@ -52,7 +63,7 @@
                 <th scope="col">Title:</th>
                 <th scope="col">Created:</th>
                 <th scope="col">Last till:</th>
-                <th scope="col">Author:</th>
+                <th scope="col">Initiator:</th>
               </tr>
             </thead>
             <tbody>
@@ -77,25 +88,23 @@
 
             <div class="container">
               <div class="col-sm-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                  <label class="form-check-label" for="exampleRadios1">
-                    Default radio
+                <div id="options-list" class="btn-group btn-group-vertical btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> Radio
                   </label>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                  <label class="form-check-label" for="exampleRadios2">
-                    Second default radio
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                  <label class="form-check-label" for="exampleRadios3">
-                    Disabled radio
-                  </label>
-                </div>
-
+              </div>
+              <div class="col-sm-6">
+                <div id="voting-stats" class="list-group"></div>
+              </div>
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-dark">Vote</button>
               </div>
             </div>
 
