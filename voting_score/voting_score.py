@@ -74,9 +74,9 @@ class VotingScore(IconScoreBase):
 
     @external
     def addPollOption(self, poll_id: int, poll_entry: str) -> None:
-        current_poll = loads(self.polls_.get(poll_id - 1))
+        current_poll = loads(self.polls_.get(poll_id))
         current_poll.addCandidate(poll_entry)
-        self.polls_[poll_id - 1] = dumps(current_poll)
+        self.polls_[poll_id] = dumps(current_poll)
 
     @external(readonly=True)
     def getPollOptions(self, poll_id: int) -> dict:
