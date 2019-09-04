@@ -8,6 +8,7 @@ https://github.com/icon-project/t-bears //don't forget to start rabbitmq with 'b
 https://www.icondev.io/docs/how-to-change-network-in-iconex
 
 https://stackoverflow.com/questions/23439126/how-to-mount-a-host-directory-in-a-docker-container
+https://hub.docker.com/r/iconloop/tbears
 
 -tutorial:
 https://medium.com/@2infiniti/creating-icon-dapp-from-a-z-part-1-tools-environment-dd56f8dfc905

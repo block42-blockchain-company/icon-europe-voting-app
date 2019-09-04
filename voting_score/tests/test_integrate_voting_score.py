@@ -93,34 +93,115 @@ class TestVotingScore(IconIntegrateTestBase):
         self.assertEqual(self._score_address, tx_result['scoreAddress'])
 
     def test_createPoll(self):
-        pass
+        pollName = "BestPizza"
+        pollQuestion = "What is the best pizza in the world?"
+        pollsBefore = readTransaction(self, "exportPolls", {})
 
-    def test_generatePollID(self):
-        pass
+        writeTransaction(self, "createPoll", {"poll_name": pollName, "poll_question": pollQuestion})
+
+        poll = readTransaction(self, "exportPollsByName", {"poll_name": pollName})
+        pollsAfter = readTransaction(self, "exportPolls", {})
+        self.assertEqual(len(pollsBefore) + 1, len(pollsAfter))
+        #print("poll: ", poll)
+        #print("poll.question: ", poll["question"])
+        self.assertEqual(poll["question"], pollQuestion)
 
     def test_removePoll(self):
-        pass
+        pollName = "President"
+        pollQuestion = "Who should lead ICON-Republic?"
+        writeTransaction(self, "createPoll", {"poll_name": pollName, "poll_question": pollQuestion})
+
+        writeTransaction(self, "removePoll", {"poll_id": 0})
+
+        polls = readTransaction(self, "exportPolls", {})
+        self.assertEqual(len(polls), 0)
 
     def test_removeAllPolls(self):
-        pass
+        pollName = "Moon"
+        pollQuestion = "When moon?"
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "1", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "2", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "3", "poll_question": pollQuestion})
+
+        writeTransaction(self, "removeAllPolls", {})
+
+        polls = readTransaction(self, "exportPolls", {})
+        self.assertEqual(len(polls), 0)
 
     def test_exportPolls(self):
-        pass
+        pollName = "RealNakamoto"
+        pollQuestion = "Who is the real Nakamoto?"
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "1", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "2", "poll_question": pollQuestion})
+
+        polls = readTransaction(self, "exportPolls", {})
+
+        self.assertEqual(len(polls), 2)
+        self.assertEqual(polls[0]["name"], pollName + "1")
+        self.assertEqual(polls[1]["name"], pollName + "2")
+        self.assertEqual(polls[1]["question"], pollQuestion)
+        self.assertEqual(polls[1]["question"], pollQuestion)
 
     def test_exportPollById(self):
-        pass
+        pollName = "FiatOrCrypto"
+        pollQuestion = "What is better for our future - fiat or crypto?"
+        writeTransaction(self, "createPoll", {"poll_name": pollName, "poll_question": pollQuestion})
+
+        poll = readTransaction(self, "exportPollById", {"poll_id": 0})
+
+        self.assertEqual(poll["name"], pollName)
 
     def test_exportPollsByName(self):
-        pass
+        pollName = "EfficientCar"
+        pollQuestion = "What is the most efficient car?"
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "1", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "2", "poll_question": pollQuestion})
+
+        poll = readTransaction(self, "exportPollsByName", {"poll_name": pollName + "2"})
+
+        self.assertEqual(poll["name"], pollName + "2")
+        self.assertEqual(poll["question"], pollQuestion)
 
     def test_addPollOption(self):
-        pass
+        pollName = "MakeICONGreatAgain"
+        pollQuestion = "Choose the best option for the ecosystem!"
+        pollEntry = "Wall"
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "1", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "2", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "3", "poll_question": pollQuestion})
+
+        writeTransaction(self, "addPollOption", {"poll_id": 0, "poll_entry": pollEntry})
+
+        polls = readTransaction(self, "exportPolls", {})
+        self.assertEqual(len(polls[0]["candidates"]), 1)
+        self.assertEqual(polls[0]["candidates"][0]["name"], pollEntry)
 
     def test_getPollOptions(self):
-        pass
+        pollName = "Dinner"
+        pollQuestion = "What should we eat for dinner?"
+        pollEntry = "A stone"
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "1", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "2", "poll_question": pollQuestion})
+        writeTransaction(self, "createPoll", {"poll_name": pollName + "3", "poll_question": pollQuestion})
+        writeTransaction(self, "addPollOption", {"poll_id": 0, "poll_entry": pollEntry})
+
+        pollOptions = readTransaction(self, "getPollOptions", {"poll_id": 0})
+
+        self.assertEqual(len(pollOptions), 1)
+        self.assertEqual(pollOptions[0]["name"], pollEntry)
 
     def test_getSenderBalance(self):
+        #no idea how to test this yet
         pass
 
     def test_vote(self):
-        pass
+        pollName = "NewPRep"
+        pollQuestion = "Who should replace the malicious P-Rep?"
+        pollEntry = "Micky Mouse"
+        writeTransaction(self, "createPoll", {"poll_name": pollName, "poll_question": pollQuestion})
+        writeTransaction(self, "addPollOption", {"poll_id": 0, "poll_entry": pollEntry})
+
+        writeTransaction(self, "vote", {"poll_id": 0, "poll_entry_id": 0})
+
+        poll = readTransaction(self, "exportPollsByName", {"poll_name": pollName + "2"})
+        self.assertNotEqual(poll["candidates"][0]["votes"], 0)

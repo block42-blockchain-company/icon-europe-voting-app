@@ -28,7 +28,7 @@ class VotingScore(IconScoreBase):
         return len(self.polls_)
 
     @external
-    def removePoll(self, poll_id: int) -> bool:
+    def removePoll(self, poll_id: int) -> bool: #why is poll_id needed?
         self.polls_.pop()
 
     @external
@@ -63,10 +63,10 @@ class VotingScore(IconScoreBase):
         """
         Exports 0,1 or more human-readable Polls
         """
-        poll = Poll()
+        poll = {}
 
         for temp_poll in self.polls_:
-            if loads(temp_poll).name_ == poll_name:
+            if loads(temp_poll).getName() == poll_name:
                 poll = loads(temp_poll)
                 break
 
@@ -89,6 +89,7 @@ class VotingScore(IconScoreBase):
     @external
     def vote(self, poll_id: int, poll_entry_id: str) -> None:
         sender_balance = self.icx.get_balance(self.msg.sender)
+        print("sender_balance: ", sender_balance)
         if(sender_balance > 0):
             poll = loads(self.polls_.get(poll_id - 1))
             poll.vote(poll_entry_id, sender_balance)
