@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
     # score_handler.readTransaction("getSenderBalance", {})
     # score_handler.writeTransaction("vote", vote_obj)
-    # score_handler.writeTransaction("removeAllPolls", {})
-    score_handler.readTransaction("exportPolls", {})
+    score_handler.writeTransaction("removeAllPolls", {})
+    # score_handler.readTransaction("exportPolls", {})
     # score_handler.readTransaction("removePoll", {"poll_id": "0"})
     # score_handler.readTransaction("getPollByName", poll_name)
     # score_handler.readTransaction("getPollsOptions", get_poll_options)
@@ -114,143 +114,151 @@ if __name__ == "__main__":
         }
     ]
 
-    # for poll in new_polls:
-    #     score_handler.writeTransaction("createPoll", poll)
+    for poll in range(1):
+        score_handler.writeTransaction("createPoll", new_polls[poll])
 
     poll_options =[
         {
             "poll_id": "0",
+            "poll_entry": "Donald Trump"
+        },
+        {
+            "poll_id": "0",
+            "poll_entry": "Bob Marley"
+        },
+        {
+            "poll_id": "0",
+            "poll_entry": "Satoshi Nakamoto"
+        },
+        {
+            "poll_id": "1",
             "poll_entry": "Stranger Things"
         },
         {
-            "poll_id": "0",
+            "poll_id": "1",
             "poll_entry": "Rick and Morty"
         },
         {
-            "poll_id": "0",
+            "poll_id": "1",
             "poll_entry": "Tom and Jerry"
         },
         {
-            "poll_id": "1",
+            "poll_id": "2",
             "poll_entry": "Breakfast"
         },
         {
-            "poll_id": "1",
+            "poll_id": "2",
             "poll_entry": "Lunch"
         },
         {
-            "poll_id": "1",
+            "poll_id": "2",
             "poll_entry": "Brunch"
         },
         {
-            "poll_id": "1",
+            "poll_id": "2",
             "poll_entry": "Dinner"
         },
         {
-            "poll_id": "2",
+            "poll_id": "3",
             "poll_entry": "Personal chef"
         },
         {
-            "poll_id": "2",
+            "poll_id": "3",
             "poll_entry": "Maid"
         },
         {
-            "poll_id": "2",
+            "poll_id": "3",
             "poll_entry": "Nanny"
         },
         {
-            "poll_id": "2",
+            "poll_id": "3",
             "poll_entry": "Lambo"
         },
         {
-            "poll_id": "3",
+            "poll_id": "4",
             "poll_entry": "Burger King"
         },
         {
-            "poll_id": "3",
+            "poll_id": "4",
             "poll_entry": "McDonalds"
         },
         {
-            "poll_id": "3",
+            "poll_id": "4",
             "poll_entry": "KFC"
         },
         {
-            "poll_id": "4",
+            "poll_id": "5",
             "poll_entry": "Hair"
         },
         {
-            "poll_id": "4",
+            "poll_id": "5",
             "poll_entry": "Makeup"
         },
         {
-            "poll_id": "5",
+            "poll_id": "6",
             "poll_entry": "Cat-person"
         },
         {
-            "poll_id": "5",
-            "poll_entry": "Dog-person"
-        },
-        {
-            "poll_id": "5",
-            "poll_entry": "Dog-person"
-        },
-        {
             "poll_id": "6",
+            "poll_entry": "Dog-person"
+        },
+        {
+            "poll_id": "7",
             "poll_entry": "Choclate"
         },
         {
-            "poll_id": "6",
+            "poll_id": "7",
             "poll_entry": "Vanilla"
         },
         {
-            "poll_id": "6",
+            "poll_id": "7",
             "poll_entry": "Peach"
         },
         {
-            "poll_id": "6",
+            "poll_id": "7",
             "poll_entry": "stračitela"
         },
         {
-            "poll_id": "7",
+            "poll_id": "8",
             "poll_entry": "1 week"
         },
         {
-            "poll_id": "7",
+            "poll_id": "8",
             "poll_entry": "1 month"
         },
         {
-            "poll_id": "7",
+            "poll_id": "8",
             "poll_entry": "1 year"
         },
         {
-            "poll_id": "7",
+            "poll_id": "8",
             "poll_entry": "never"
         },
         {
-            "poll_id": "8",
+            "poll_id": "9",
             "poll_entry": "LoliPop"
         },
         {
-            "poll_id": "8",
+            "poll_id": "9",
             "poll_entry": "BonBon"
         },
         {
-            "poll_id": "8",
+            "poll_id": "9",
             "poll_entry": "Dick"
         },
         {
-            "poll_id": "9",
+            "poll_id": "10",
             "poll_entry": "Bulbasaur"
         },
         {
-            "poll_id": "9",
+            "poll_id": "10",
             "poll_entry": "Charmander"
         },
         {
-            "poll_id": "9",
+            "poll_id": "10",
             "poll_entry": "Wartortle"
         }
     ]
-    # 
-    # for poll_opt in poll_options:
-    #     score_handler.writeTransaction("addPollOption", poll_opt)
+
+    for poll_opt in range(0,1):
+        score_handler.writeTransaction("addPollOption", poll_options[poll_opt])
