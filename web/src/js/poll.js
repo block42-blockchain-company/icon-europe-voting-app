@@ -1,4 +1,5 @@
 import IconHandler from './iconhandler.js'
+import * as constants from './constants.js';
 
 let polls = []; //stores all polls created
 
@@ -12,7 +13,7 @@ export default class Poll
     this.start_date = poll_info.start_date;
     this.end_date = poll_info.end_date;
     this.description = poll_info.description;
-    this.candidates = poll_info.candidates;
+    this.answers = poll_info.candidates;
   }
 
   renderListView()
@@ -38,41 +39,44 @@ export default class Poll
 
   renderDetailView()
   {
-      let poll = getPollByID( parseInt(this.id.split("-")[1])) //split id from string --> maybe write function to this???!?
+      let poll_id = parseInt(this.id.split("-")[1]);
+      let poll = getPollByID( poll_id ) //split id from string --> maybe write function to this???!?
       let options_list = document.getElementById("options-list");
 
       // insert name and question
       document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
       document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
 
-      //list voting options
-      for( var it in poll.candidates)
+      //list voting answers
+      for( var it in poll.answers)
       {
+        if(it == 0 && options_list.children.length) //clear previous buttons
+          options_list.innerHTML = "";
 
-        // if(it == 0 && options_list.children.length) //clear previous buttons
-        //   options_list.innerHTML = "";
+        // create buttons
+        let label = document.createElement("label");
+        label.setAttribute("class", "btn btn-light btn-lg btn-block")
+        label.innerHTML = poll.answers[it].name;
 
+        let input = document.createElement("input");
+        input.setAttribute("type", "radio");
+        input.setAttribute("name", "options");
+        input.setAttribute("autocomplete", "off");
 
-        // //create button to vote
-        // let button = document.createElement("label");
-        //
-        // button.setAttribute("class", "btn btn-secondary");
-        // let input = document.createElement("input");
-        // input.setAttribute("type", "radio");
-        // input.setAttribute("autocomplete", "off");
-        // // input.setAttribute("name", "options");
-        // // input.setAttribute("id", "options");
-        //
-        // button.appendChild(input);
-        // button.innerHTML = poll.candidates[it].name;
+        label.appendChild(input)
 
-
-        // button.setAttribute("type", "button");
-        // options_list.appendChild(button);
+        //append buttons
+        options_list.appendChild(label);
       }
 
       $('#poll-modal').modal("show"); // toggle on modal
   }
+
+  vote()
+  {
+
+  }
+
 }
 
 export function storePolls( polls_data )

@@ -2,11 +2,6 @@ import Poll, { storePolls } from './poll.js'
 import IconHandler from './iconhandler.js'
 
 
-
-
-
-
-
 function main()
 {
   let score_handler = new IconHandler();

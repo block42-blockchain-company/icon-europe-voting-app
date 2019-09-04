@@ -1,3 +1,6 @@
+/*
+  Navigation
+ */
 nav {
   background-color: #1aaaba !important;
 }
@@ -9,4 +12,14 @@ nav span {
 nav img {
   width: 2em;
   height: 2em;
+}
+
+
+
+/*
+  Modal
+ */
+.btn-group-answers
+{
+  width: 100%;
 }

@@ -75,25 +75,19 @@
             </div>
 
             <div class="container">
-              <div class="col-sm-6">
-                <div id="options-list" class="btn-group btn-group-vertical btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-secondary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
-                  </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> Radio
-                  </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> Radio
-                  </label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div id="options-list" class="btn-group-toggle btn-group-vertical btn-group-answers" data-toggle="buttons">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div id="voting-stats" class="list-group"></div>
                 </div>
               </div>
-              <div class="col-sm-6">
-                <div id="voting-stats" class="list-group"></div>
-              </div>
-              <div class="col-sm-12">
-                <button type="button" class="btn btn-dark">Vote</button>
-              </div>
+
+              <!-- <div class="col-sm-12"> -->
+                <button id="btn-vote" type="button" class="btn btn-dark btn-block">Vote</button>
+              <!-- </div> -->
             </div>
 
 
