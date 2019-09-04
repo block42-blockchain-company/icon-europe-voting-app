@@ -19,7 +19,10 @@ nav img {
 /*
   Modal
  */
-.btn-group-answers
-{
+#poll-modal .btn-group-answers{
   width: 100%;
+}
+
+#poll-modal #btn-vote{
+  width: 80%;
 }
