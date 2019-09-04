@@ -1,4 +1,8 @@
-class Poll
+import IconHandler from './iconhandler.js'
+
+let polls = []; //stores all polls created
+
+export default class Poll
 {
   constructor( poll_info )
   {
@@ -11,7 +15,7 @@ class Poll
     this.candidates = poll_info.candidates;
   }
 
-  render()
+  renderListView()
   {
     let tbody = document.getElementById("polls-table").getElementsByTagName("tbody")[0];
     let row = tbody.insertRow();
@@ -28,11 +32,11 @@ class Poll
         row.insertCell().appendChild(document.createTextNode(this[key]));
     }
 
-    row.addEventListener( "click", this.openDetailView);
+    row.addEventListener( "click", this.renderDetailView);
 
   }
 
-  openDetailView()
+  renderDetailView()
   {
       let poll = getPollByID( parseInt(this.id.split("-")[1])) //split id from string --> maybe write function to this???!?
       let options_list = document.getElementById("options-list");
@@ -69,10 +73,22 @@ class Poll
 
       $('#poll-modal').modal("show"); // toggle on modal
   }
+}
 
+export function storePolls( polls_data )
+{
+  for( var it in polls_data)
+  {
+    var poll = new Poll(polls_data[it])
+    poll.renderListView();
 
+    polls.push(poll);
+  }
+}
 
-
-
-
+function getPollByID( poll_id )
+{
+  for( let obj in polls)
+    if(polls[obj].id === poll_id)
+      return polls[obj]
 }
