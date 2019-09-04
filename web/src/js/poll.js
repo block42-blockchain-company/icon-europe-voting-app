@@ -43,7 +43,8 @@ export default class Poll
       let poll = getPollByID( poll_id ) //split id from string --> maybe write function to this???!?
       let options_list = document.getElementById("options-list");
 
-      // insert name and question
+      // insert name, valiue and question
+      options_list.value = poll_id;
       document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
       document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
 
@@ -61,25 +62,54 @@ export default class Poll
         let input = document.createElement("input");
         input.setAttribute("type", "radio");
         input.setAttribute("name", "options");
+        input.setAttribute("value", poll.answers[it].id);
         input.setAttribute("autocomplete", "off");
-
-        label.appendChild(input)
+        label.appendChild(input);
 
         //append buttons
         options_list.appendChild(label);
       }
+
+      constants.VOTE_BUTTON.value = poll_id;
+      constants.VOTE_BUTTON.addEventListener("click", poll.vote);
 
       $('#poll-modal').modal("show"); // toggle on modal
   }
 
   vote()
   {
+    try {
+      let poll_id = document.getElementById("options-list").value;
+      let answer_id = parseInt(document.getElementsByClassName("active")[0]
+                                     .getElementsByTagName("input")[0].value);
 
+      if(IconHandler.instance.wallet)
+      {
+        let method ="vote";
+        let params =   {
+            "poll_id" : poll_id,
+            "poll_entry_id" : answer_id
+          }
+
+        IconHandler.instance.requestScoreWriteMethod(method, params)
+      }
+      else
+      {
+        alert(constants.WALLET_UNCONNECTED)
+        $('#poll-modal').modal("hide");
+      }
+    } catch (e) {
+      console.log(e);
+      if(e.message == constants.GET_BY_CLASSNAME_UNDEFINED)
+      {
+        alert("You need to chose one answer");
+      }
+    }
   }
 
 }
 
-export function storePolls( polls_data )
+export function renderList( polls_data )
 {
   for( var it in polls_data)
   {

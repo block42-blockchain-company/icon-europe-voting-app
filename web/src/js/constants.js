@@ -14,4 +14,10 @@ export const ADDRESS_REQUEST = new CustomEvent( 'ICONEX_RELAY_REQUEST', { detail
      type: 'REQUEST_ADDRESS'
 }});
 //ICONEX wallet request button
-export const request_address_button = document.getElementsByClassName("btn-wallet")[0];
+export const REQUEST_ADDRESS_BUTTON = document.getElementById("btn-wallet");
+
+export const VOTE_BUTTON = document.getElementById("btn-vote");
+
+// ERROR Messages
+export const GET_BY_CLASSNAME_UNDEFINED = "document.getElementsByClassName(...)[0] is undefined";
+export const WALLET_UNCONNECTED = "You need to connect to your wallet first.";
