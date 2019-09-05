@@ -1,6 +1,4 @@
 from iconservice import *
-from pickle import dumps, loads
-from .poll import Poll
 
 from .poll import Poll
 
@@ -11,7 +9,7 @@ class VotingScore(IconScoreBase):
 
     def __init__(self, db: IconScoreDatabase) -> None:
         super().__init__(db)
-        self.polls_ = ArrayDB("Polls", db, value_type = bytes)
+        self.polls_ = ArrayDB("Polls", db, value_type = str)
 
     def on_install(self) -> None:
         super().on_install()
@@ -20,16 +18,19 @@ class VotingScore(IconScoreBase):
         super().on_update()
 
     @external
-    def createPoll(self, poll_name: str, poll_question: str) -> None:
-        new_poll = Poll(self.generatePollID(), poll_name, poll_question)
-        self.polls_.put(dumps(new_poll))
+    def createPoll(self, name: str, question: str, answers: str, timestamp: str) -> None:
+        poll_dict = {
+            "id": self.generatePollID(),
+            "name": name,
+            "question": question,
+            "answers" : json_loads(answers),
+            "timestamp": json_loads(timestamp),
+            "initiator": str(self.msg.sender)
+        }
+        self.polls_.put(json_dumps(Poll(poll_dict).serialize()))
 
     def generatePollID(self) -> int:
         return len(self.polls_)
-
-    @external
-    def removePoll(self, poll_id: int) -> bool: #why is poll_id needed?
-        self.polls_.pop()
 
     @external
     def removeAllPolls(self) -> None:
@@ -44,55 +45,55 @@ class VotingScore(IconScoreBase):
         polls = list()
 
         for poll in self.polls_:
-            polls.append(loads(poll).getData())
+            polls.append(poll)
 
         return polls
 
-    @external(readonly=True)
-    def exportPollById(self, poll_id: int) -> dict:
-        """
-        Export one and only specific Poll from SCORE
-        """
-        pass
+    # @external(readonly=True)
+    # def exportPollById(self, poll_id: int) -> dict:
+    #     """
+    #     Export one and only specific Poll from SCORE
+    #     """
+    #     pass
 
     # --------------------------------------------------------------------------
     # # BUG:  Need to work on this one, since 2 polls could have the same name
     # --------------------------------------------------------------------------
+    # @external(readonly=True)
+    # def exportPollsByName(self, poll_name: str) -> dict:
+    #     """
+    #     Exports 0,1 or more human-readable Polls
+    #     """
+    #     poll = {}
+    #
+    #     for temp_poll in self.polls_:
+    #         if loads(temp_poll).getName() == poll_name:
+    #             poll = loads(temp_poll)
+    #             break
+    #
+    #     return poll.getData()
+
+    # @external
+    # def addPollAnswer(self, poll_id: int, poll_entry: str) -> None:
+    #     current_poll = loads(self.polls_.get(poll_id))
+    #     current_poll.addCandidate(poll_entry)
+    #     self.polls_[poll_id] = dumps(current_poll)
+
     @external(readonly=True)
-    def exportPollsByName(self, poll_name: str) -> dict:
-        """
-        Exports 0,1 or more human-readable Polls
-        """
-        poll = {}
-
-        for temp_poll in self.polls_:
-            if loads(temp_poll).getName() == poll_name:
-                poll = loads(temp_poll)
-                break
-
-        return poll.getData()
-
-    @external
-    def addPollOption(self, poll_id: int, poll_entry: str) -> None:
-        current_poll = loads(self.polls_.get(poll_id))
-        current_poll.addCandidate(poll_entry)
-        self.polls_[poll_id] = dumps(current_poll)
-
-    @external(readonly=True)
-    def getPollOptions(self, poll_id: int) -> dict:
-        return loads(self.polls_.get(poll_id)).getCandidates()
+    def getPollAnswers(self, poll_id: int) -> dict:
+        poll = Poll.deserialize(json_loads(self.polls_.get(poll_id)))
+        return poll.getAnswers()
 
     @external(readonly=True)
     def getSenderBalance(self) -> int:
         return self.icx.get_balance(self.msg.sender)
 
     @external
-    def vote(self, poll_id: int, poll_entry_id: str) -> None:
+    def vote(self, poll_id: int, poll_answer_id: int) -> None:
         sender_balance = self.icx.get_balance(self.msg.sender)
-        print("sender_balance: ", sender_balance)
         if(sender_balance > 0):
-            poll = loads(self.polls_.get(poll_id - 1))
-            poll.vote(poll_entry_id, sender_balance)
-            self.polls_[poll_id - 1] = dumps(poll)
+            poll = Poll.deserialize(json_loads(self.polls_.get(poll_id)))
+            poll.vote(poll_answer_id, sender_balance)
+            self.polls_[poll_id] = json_dumps(poll.serialize())
         else:
             revert("Throw some fking exception. Like ´no founds, my dear´")

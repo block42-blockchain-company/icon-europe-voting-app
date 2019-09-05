@@ -1,49 +1,54 @@
-import datetime as DT
-
-
 class Poll:
-    def __init__(self, id: int, name: str, question: str) -> None:
-        self.__id = id
-        self.__name = name
-        self.__question = question
+    def __init__(self, obj: dict) -> None:
+        self.__id = obj['id']
+        self.__name = obj['name']
+        self.__question = obj['question']
         self.__description = str()
-        self.__candidates = list()
-        self.__start = DT.date.today().strftime("%d/%m/%Y")
-        self.__end = (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")
-        # self.__initiator
+        self.__answers = self.addAnswers(obj['answers']);
+        self.__timestamp = obj['timestamp'];
+        self.__initiator = obj['initiator']
 
-    def addCandidate(self, name: str) -> None:
-        new_candidate = dict()
-        new_candidate["id"] = len(self.__candidates)
-        new_candidate["name"] = name
-        new_candidate["votes"] = 0
-        self.__candidates.append(new_candidate)
+    def addAnswers(self, answers: list) -> None:
+        temp_list = []
 
-    def vote(self, candidate_id: int, sender_balance: int) -> None:
-        candidate = self.getCandidateById(candidate_id)
-        candidate["votes"] = candidate["votes"] + sender_balance
+        for obj in answers:
+            new_answer = dict()
+            new_answer["id"] = len(temp_list)
+            new_answer["name"] = obj
+            new_answer["votes"] = 0
+            temp_list.append(new_answer)
+
+        return temp_list
+
+    def vote(self, answer_id: int, sender_balance: int) -> None:
+        answer = self.getAnswerById(answer_id)
+        answer["votes"] = answer["votes"] + sender_balance
 
     def getId(self) -> int:
         return self.__id
 
-    def getCandidates(self) -> dict:
-        return self.__candidates
+    def getAnswers(self) -> dict:
+        return self.__answers
 
-    def getCandidateById(self, id: int):
-        for candidate in self.__candidates:
-            if candidate["id"] == int(id):
-                return candidate
+    def getAnswerById(self, id: int):
+        for answer in self.__answers:
+            if answer["id"] == int(id):
+                return answer
 
     def getName(self) -> str:
         return self.__name
 
-    def getData(self) -> dict:
+    def serialize(self) -> dict:
         return {
                 "id": self.__id,
                 "name": self.__name,
                 "question": self.__question,
                 "description": self.__description,
-                "candidates": self.__candidates,
-                "start_date": self.__start,
-                "end_date": self.__end,
+                "answers": self.__answers,
+                "timestamp": self.__timestamp,
+                "initiator": self.__initiator,
                 }
+
+    @staticmethod
+    def deserialize(obj: dict) -> 'Poll':
+        return Poll(obj)
