@@ -8,12 +8,4 @@ function main()
                       .then(renderList)
 }
 
-var test_obj =
-{
-  getIconHandler : function(){
-    return new IconHandler();
-  }
-}
-window.test_obj = test_obj;
-
 window.onload = main();

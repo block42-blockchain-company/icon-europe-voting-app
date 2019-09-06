@@ -51,4 +51,6 @@ class Poll:
 
     @staticmethod
     def deserialize(obj: dict) -> 'Poll':
-        return Poll(obj)
+        poll = Poll(obj)
+        poll.__answers = obj['answers']
+        return poll

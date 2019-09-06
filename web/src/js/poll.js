@@ -5,15 +5,16 @@ let polls = []; //stores all polls created
 
 export default class Poll
 {
-  constructor( poll_info )
+  constructor( poll_data )
   {
-    this.id = parseInt(poll_info.id);
-    this.name = poll_info.name;
-    this.question = poll_info.question;
-    this.start_date = poll_info.start_date;
-    this.end_date = poll_info.end_date;
-    this.description = poll_info.description;
-    this.answers = poll_info.candidates;
+    this.id = poll_data.id;
+    this.name = poll_data.name;
+    this.question = poll_data.question;
+    this.start_date = poll_data.timestamp.start;
+    this.end_date = poll_data.timestamp.end;
+    this.description = poll_data.description;
+    this.answers = poll_data.answers;
+    this.initiator = poll_data.initiator;
   }
 
   renderListView()
@@ -31,10 +32,11 @@ export default class Poll
         row.insertCell().appendChild(document.createTextNode(this[key]));
       else if ( key == "end_date")
         row.insertCell().appendChild(document.createTextNode(this[key]));
+      else if ( key == "initiator")
+        row.insertCell().appendChild(document.createTextNode(this[key]));
     }
 
     row.addEventListener( "click", this.renderDetailView);
-
   }
 
   renderDetailView()
@@ -73,7 +75,7 @@ export default class Poll
       constants.VOTE_BUTTON.value = poll_id;
       constants.VOTE_BUTTON.addEventListener("click", poll.vote);
 
-      $('#poll-modal').modal("show"); // toggle on modal
+      $('#poll-modal').modal("show");
   }
 
   vote()
@@ -81,14 +83,14 @@ export default class Poll
     try {
       let poll_id = document.getElementById("options-list").value;
       let answer_id = parseInt(document.getElementsByClassName("active")[0]
-                                     .getElementsByTagName("input")[0].value);
+                                       .getElementsByTagName("input")[0].value);
 
       if(IconHandler.instance.wallet)
       {
         let method ="vote";
-        let params =   {
-            "poll_id" : poll_id,
-            "poll_entry_id" : answer_id
+        let params = {
+            "poll_id" : poll_id.toString(16),
+            "poll_answer_id" : answer_id.toString(16)
           }
 
         IconHandler.instance.requestScoreWriteMethod(method, params)
@@ -99,7 +101,6 @@ export default class Poll
         $('#poll-modal').modal("hide");
       }
     } catch (e) {
-      console.log(e);
       if(e.message == constants.GET_BY_CLASSNAME_UNDEFINED)
       {
         alert("You need to chose one answer");
@@ -113,7 +114,7 @@ export function renderList( polls_data )
 {
   for( var it in polls_data)
   {
-    var poll = new Poll(polls_data[it])
+    var poll = new Poll(JSON.parse(polls_data[it]));
     poll.renderListView();
 
     polls.push(poll);

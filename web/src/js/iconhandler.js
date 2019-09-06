@@ -1,8 +1,7 @@
 import * as constants from './constants.js';
 
 const iconService = window['icon-sdk-js'];
-// const httpProvider = new iconService(new iconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3'))
-const httpProvider = new iconService(new iconService.HttpProvider('http://127.0.0.1:9000/api/v3'))
+const httpProvider = new iconService(new iconService.HttpProvider(constants.TESTNET_URL))
 const iconBuilder = iconService.IconBuilder;
 const iconConverter = iconService.IconConverter;
 
@@ -55,36 +54,33 @@ export default class IconHandler
     return await httpProvider.call(call_obj).execute();
   }
 
-  async requestScoreWriteMethod( method, params )
+  requestScoreWriteMethod( method, params )
   {
     let callBuilder = new iconBuilder.CallTransactionBuilder;
 
     let call_obj = callBuilder
                    .from(this._wallet)
                    .to(this._score_address)
-                   .stepLimit(iconConverter.toBigNumber('2000000'))
                    .nid(iconConverter.toBigNumber('3'))
-                   .nonce(iconConverter.toBigNumber('1'))
-                   .version(iconConverter.toBigNumber('3'))
                    .timestamp((new Date()).getTime() * 1000)
+                   .stepLimit(iconConverter.toBigNumber('1000000'))
+                   .version(iconConverter.toBigNumber('3'))
                    .method(method)
                    .params(params)
                    .build();
 
-    let json_rpc = JSON.stringify({
-                    "jsonrpc": "2.0",
-                    "method": method,
-                    "params": iconConverter.toRawTransaction(call_obj),
-                    "id": 50889
-                });
 
     window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
         detail: {
             type: 'REQUEST_JSON-RPC',
-            payload: json_rpc
+            payload: {
+              jsonrpc: "2.0",
+              method: "icx_sendTransaction",
+              params: iconConverter.toRawTransaction(call_obj),
+              id: 50889
+            }
         }
-    }))
-
+    }));
 
   }
 }
@@ -96,7 +92,6 @@ function bindWalletRequestButton()
 
   //catch response
   window.addEventListener(constants.ICONEX_RESPONSE, responseWallet, false)
-
 }
 
 
@@ -112,12 +107,18 @@ function responseWallet(ev)
   if(response.type == constants.HAS_ACCOUNT_RESPONSE)
   {
     if(response.payload.hasAccount)
-    window.dispatchEvent(constants.ADDRESS_REQUEST);
+      window.dispatchEvent(constants.ADDRESS_REQUEST);
+    else
+      alert("You need to create a Wallet first")
   }
-  else if ( response.type == constants.ADDRESS_RESPONSE )
+  else if(response.type == constants.ADDRESS_RESPONSE )
   {
     _instance._wallet = response.payload;
     constants.REQUEST_ADDRESS_BUTTON.innerHTML = response.payload;
     constants.REQUEST_ADDRESS_BUTTON.removeEventListener("click", requestWallet);
+  }
+  else if( response.type == constants.JSON_RPC_RESPONSE)
+  {
+    console.log(response);
   }
 }
