@@ -1,264 +1,122 @@
 from score_handler import ScoreHandler
+import json
+import datetime as DT
 
 if __name__ == "__main__":
 
-    # "cxc6c0e79fd57c46c410a1a2a786479a84fad45505d" #<-- old old
-    # cxf68897091500f05beb5cece709e330f4664386c8 --> old
-    # cx8fbe6da6369935db85970b8da8798526276982a4 ---> new one
+    #cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075 <--- testnet smartcontract
 
-    # cx3720aa917514d93ba30152cfd5054fbb557a5bd8 <--- unsused one with 4 empty polls
+    score_address = "cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075" #<-- Replace with your score address
+    # keystore_file = "./keystore_test1"
+    # password = "test1_Account"
+    keystore_file = "./keystore_test2"
+    password = "@icon123"
 
-    score_address = "cx08bed0a6999a6c3f866d26c1be67e3e1139ba75a" #<-- Replace with your score address
-    keystore_file = "./keystore_test1"
-    password = "test1_Account"
 
 
     score_handler = ScoreHandler(score_address, keystore_file, password);
 
 
     # Sample for creating poll
-    create_poll = {"poll_name": "President elections"}
-
-    add_question = {"poll_question" : "What was the last show you watched?"}
-
-    # Sample for creating polls entries
-    # {poll_id : int
-    #  poll_entry : string}
-    poll_option = {
-                "poll_id": "0",
-                "poll_entry": "Satoshi Nakomoto"
-                }
-    poll_option1 = {
-                "poll_id": "0",
-                "poll_entry": "Bob Marley"
-                }
-    poll_option2 = {
-                "poll_id": "0",
-                "poll_entry": "Donald Trump"
+    create_poll = {
+                "name": "ICON President elections",
+                "question": "Who should be our president in ICON-Republi",
+                "answers": json.dumps(["ena", "dva", "tri"]),
+                "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                          "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
                 }
 
     # Vote sample object
-    # {poll_id : candidate_id,
-    #  poll_entry_id : }
     vote_obj = {
-                "poll_id": "0",
-                "poll_entry_id": "1"
+                "poll_id": 0,
+                "poll_answer_id": 1
                 }
 
-    get_poll_options = { "poll_id": "0"}
-
-    # score_handler.writeTransaction("createPoll", create_poll)
-    # score_handler.writeTransaction("createPoll", create_poll)
-    # score_handler.writeTransaction("addPollOption", poll_options
-    # score_handler.writeTransaction("addPollOption", poll_option1)
-    # score_handler.writeTransaction("addPollOption", poll_option2)
-    # score_handler.readTransaction("exportPolls", {})
-
-    # score_handler.readTransaction("getSenderBalance", {})
-    # score_handler.writeTransaction("vote", vote_obj)
-    score_handler.writeTransaction("removeAllPolls", {})
-    # score_handler.readTransaction("exportPolls", {})
-    # score_handler.readTransaction("removePoll", {"poll_id": "0"})
-    # score_handler.readTransaction("getPollByName", poll_name)
-    # score_handler.readTransaction("getPollsOptions", get_poll_options)
+    # score_handler.writeTransaction("removeAllPolls", {})
 
 
-    # create_poll = {"poll_name": ""}
-
-
-    new_polls = list();
     new_polls = [
         {
-        "poll_name": "ICON President elections",
-        "poll_question": "Who should be our president in ICON-Republic?"
+        "name": "ICON President elections",
+        "question": "Who should be our president in ICON-Republic?",
+        "answers": json.dumps(["Donald Trump", "Bob Marley", "Satoshi Nakamoto"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Last Show",
-        "poll_question": "What was the last show you watched?"
+        "name": "Last Show",
+        "question": "What was the last show you watched?",
+        "answers": json.dumps(["Stranger Things", "Rick and Morty", "Tom and Jerry"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Favourite Meal",
-        "poll_question": "What is your favourite meal?"
+        "name": "Favourite Meal",
+        "question": "What is your favourite meal?",
+        "answers": json.dumps(["Breakfast", "Lunch", "Brunch","Dinner"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Rather have...",
-        "poll_question": "Would you rather have?"
+        "name": "Rather have...",
+        "question": "Would you rather have?",
+        "answers": json.dumps(["Personal chef", "Maid", "Nanny", "Lambo"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Best fries",
-        "poll_question": "Who hast the best fries?"
+        "name": "Best fries",
+        "question": "Who hast the best fries?",
+        "answers": json.dumps(["Burger King", "McDonalds", "KFC"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Hair or makeup",
-        "poll_question": "Hair or makeup first?"
+        "name": "Hair or makeup",
+        "question": "Hair or makeup first?",
+        "answers": json.dumps(["Hair", "Makeup"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Cat-Dog-Person",
-        "poll_question": "Are you a cat person or a dog person?"
+        "name": "Cat-Dog-Person",
+        "question": "Are you a cat person or a dog person?",
+        "answers": json.dumps(["Cat-person", "Dog-person"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Favorite ice-cream",
-        "poll_question": "What is your favorite ice-cream flavor?"
+        "name": "Favorite ice-cream",
+        "question": "What is your favorite ice-cream flavor?",
+        "answers": json.dumps(["Choclate", "Vanilla", "Peach","stračitela"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Deep clean",
-        "poll_question": "How long has it been since you've deep cleaned you refrigerator?"
+        "name": "Deep clean",
+        "question": "How long has it been since you've deep cleaned you refrigerator?",
+        "answers": json.dumps(["1 week", "1 month", "1 year", "never"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Favorite candy",
-        "poll_question": "What is you favorite kind of candy?"
+        "name": "Favorite candy",
+        "question": "What is you favorite kind of candy?",
+        "answers": json.dumps(["LoliPop", "BonBon", "Dick"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
         {
-        "poll_name": "Favorite Pokemon",
-        "poll_question": "What is your favorite Pokemon?"
-        }
+        "name": "Favorite Pokemon",
+        "question": "What is your favorite Pokemon?",
+        "answers": json.dumps(["Bulbasaur", "Charmander", "Wartortle"]),
+        "timestamp" : json.dumps({"start": DT.date.today().strftime("%d/%m/%Y"),
+                                  "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
+        },
     ]
+    # for it in range(len(new_polls)):
+    # for it in range(4):
+    #     score_handler.writeTransaction("createPoll", new_polls[it])
 
-    for poll in range(1):
-        score_handler.writeTransaction("createPoll", new_polls[poll])
-
-    poll_options =[
-        {
-            "poll_id": "0",
-            "poll_entry": "Donald Trump"
-        },
-        {
-            "poll_id": "0",
-            "poll_entry": "Bob Marley"
-        },
-        {
-            "poll_id": "0",
-            "poll_entry": "Satoshi Nakamoto"
-        },
-        {
-            "poll_id": "1",
-            "poll_entry": "Stranger Things"
-        },
-        {
-            "poll_id": "1",
-            "poll_entry": "Rick and Morty"
-        },
-        {
-            "poll_id": "1",
-            "poll_entry": "Tom and Jerry"
-        },
-        {
-            "poll_id": "2",
-            "poll_entry": "Breakfast"
-        },
-        {
-            "poll_id": "2",
-            "poll_entry": "Lunch"
-        },
-        {
-            "poll_id": "2",
-            "poll_entry": "Brunch"
-        },
-        {
-            "poll_id": "2",
-            "poll_entry": "Dinner"
-        },
-        {
-            "poll_id": "3",
-            "poll_entry": "Personal chef"
-        },
-        {
-            "poll_id": "3",
-            "poll_entry": "Maid"
-        },
-        {
-            "poll_id": "3",
-            "poll_entry": "Nanny"
-        },
-        {
-            "poll_id": "3",
-            "poll_entry": "Lambo"
-        },
-        {
-            "poll_id": "4",
-            "poll_entry": "Burger King"
-        },
-        {
-            "poll_id": "4",
-            "poll_entry": "McDonalds"
-        },
-        {
-            "poll_id": "4",
-            "poll_entry": "KFC"
-        },
-        {
-            "poll_id": "5",
-            "poll_entry": "Hair"
-        },
-        {
-            "poll_id": "5",
-            "poll_entry": "Makeup"
-        },
-        {
-            "poll_id": "6",
-            "poll_entry": "Cat-person"
-        },
-        {
-            "poll_id": "6",
-            "poll_entry": "Dog-person"
-        },
-        {
-            "poll_id": "7",
-            "poll_entry": "Choclate"
-        },
-        {
-            "poll_id": "7",
-            "poll_entry": "Vanilla"
-        },
-        {
-            "poll_id": "7",
-            "poll_entry": "Peach"
-        },
-        {
-            "poll_id": "7",
-            "poll_entry": "stračitela"
-        },
-        {
-            "poll_id": "8",
-            "poll_entry": "1 week"
-        },
-        {
-            "poll_id": "8",
-            "poll_entry": "1 month"
-        },
-        {
-            "poll_id": "8",
-            "poll_entry": "1 year"
-        },
-        {
-            "poll_id": "8",
-            "poll_entry": "never"
-        },
-        {
-            "poll_id": "9",
-            "poll_entry": "LoliPop"
-        },
-        {
-            "poll_id": "9",
-            "poll_entry": "BonBon"
-        },
-        {
-            "poll_id": "9",
-            "poll_entry": "Dick"
-        },
-        {
-            "poll_id": "10",
-            "poll_entry": "Bulbasaur"
-        },
-        {
-            "poll_id": "10",
-            "poll_entry": "Charmander"
-        },
-        {
-            "poll_id": "10",
-            "poll_entry": "Wartortle"
-        }
-    ]
-
-    for poll_opt in range(0,1):
-        score_handler.writeTransaction("addPollOption", poll_options[poll_opt])
+    score_handler.writeTransaction("vote", vote_obj)
+    score_handler.readTransaction("exportPolls", {})
