@@ -1,4 +1,12 @@
 /*
+  Font
+ */
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+/*
   Navigation
  */
 nav {
@@ -14,7 +22,13 @@ nav img {
   height: 2em;
 }
 
-
+/*
+  Table
+ */
+.table tbody tr
+{
+  cursor: pointer;
+}
 
 /*
   Modal
@@ -26,3 +40,19 @@ nav img {
 #poll-modal #btn-vote{
   width: 80%;
 }
+
+/*
+  Footer
+ */
+ footer .social
+ {
+   height: 40px;
+    width: 40px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 1em;
+ }
+
+ #copyright {
+     color: gray !important;
+ }
