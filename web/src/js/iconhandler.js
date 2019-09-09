@@ -1,4 +1,5 @@
 import * as constants from './constants.js';
+import * as cookieUtils from './cookieUtils.js';
 
 const iconService = window['icon-sdk-js'];
 const httpProvider = new iconService(new iconService.HttpProvider(constants.TESTNET_URL))
@@ -16,8 +17,18 @@ export default class IconHandler
     {
       _instance = this;
 
-      this._wallet = null;
       this._score_address = constants.SCORE_ADDRESS;
+      
+      let wallet_address = cookieUtils.getCookie(constants.COOKIE_NAME_WALLET_ADDRESS);
+      if (wallet_address != "") 
+      {
+        this._wallet = wallet_address;
+        constants.REQUEST_ADDRESS_BUTTON.innerHTML = wallet_address;
+      } 
+      else 
+      {
+        this._wallet = null;
+      }
 
       bindWalletRequestButton();
     }
@@ -117,7 +128,7 @@ function responseWallet(ev)
   {
     _instance._wallet = response.payload;
     constants.REQUEST_ADDRESS_BUTTON.innerHTML = response.payload;
-    constants.REQUEST_ADDRESS_BUTTON.removeEventListener("click", requestWallet);
+    cookieUtils.setCookie(constants.COOKIE_NAME_WALLET_ADDRESS, response.payload, constants.COOKIE_EXPIRATION_DAYS)
   }
   else if( response.type == constants.JSON_RPC_RESPONSE)
   {

@@ -32,3 +32,7 @@ export const WALLET_UNCONNECTED = "You need to connect to your wallet first.";
 
 //char colors
 export const CHART_LABELS = ['Red', 'Blue', 'Yellow']
+
+//COOKIES
+export const COOKIE_NAME_WALLET_ADDRESS = "wallet_address"
+export const COOKIE_EXPIRATION_DAYS = 30
