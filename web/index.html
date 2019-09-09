@@ -16,6 +16,12 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <!--ChartJS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+
+
+
     <!--- JS Source files -->
     <script type="module" src="src/js/main.js" defer></script>
 
@@ -88,7 +94,9 @@
                   </div>
                 </div>
                 <div class="col-sm-5">
-                  <div id="voting-stats" class="list-group"></div>
+                  <div id="voting-stats" class="list-group">
+                    <canvas id="myChart"></canvas>
+                  </div>
                 </div>
                 <div class="col-sm-1"></div>
               </div>
@@ -102,7 +110,7 @@
       </div>
 
       <!-- Footer -->
-      <footer class="py-5 bg-dark fixed-bottom" >
+      <footer class="py-5 bg-dark sticky-bottom" >
        <div class="container">
          <div class="text-center">
            <span><a href="https://twitter.com/block42_company" target="_blank"><img class="social" src="src/img/twitter.png" alt="Twitter"></a></span>

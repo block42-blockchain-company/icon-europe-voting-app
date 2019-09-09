@@ -26,3 +26,6 @@ export const VOTE_BUTTON = document.getElementById("btn-vote");
 // ERROR Messages
 export const GET_BY_CLASSNAME_UNDEFINED = "document.getElementsByClassName(...)[0] is undefined";
 export const WALLET_UNCONNECTED = "You need to connect to your wallet first.";
+
+//char colors
+export const CHART_LABELS = ['Red', 'Blue', 'Yellow']

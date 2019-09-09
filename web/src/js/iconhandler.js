@@ -104,6 +104,8 @@ function responseWallet(ev)
 {
   let response = ev.detail;
 
+  console.log(response);
+
   if(response.type == constants.HAS_ACCOUNT_RESPONSE)
   {
     if(response.payload.hasAccount)

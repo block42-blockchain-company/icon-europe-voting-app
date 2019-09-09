@@ -78,6 +78,8 @@ export default class Poll
       $('#poll-modal').modal("show");
   }
 
+  }
+
   vote()
   {
     try {

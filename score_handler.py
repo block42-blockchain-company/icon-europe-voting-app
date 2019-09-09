@@ -3,6 +3,7 @@ from iconsdk.icon_service import IconService
 from iconsdk.providers.http_provider import HTTPProvider
 from iconsdk.wallet.wallet import KeyWallet
 
+
 from iconsdk.builder.transaction_builder import (
     TransactionBuilder,
     DeployTransactionBuilder,
@@ -14,11 +15,15 @@ from iconsdk.builder.call_builder import CallBuilder
 
 from pickle import dumps, loads
 import json
+import pprint
+
 
 
 class ScoreHandler:
 
-    icon_service = IconService(HTTPProvider("http://localhost:9000", 3))
+    icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io", 3))
+    # icon_service = IconService(HTTPProvider("http://localhost:9000", 3))
+    pp = pprint.PrettyPrinter(indent=4)
 
     def __init__(self, score_address: str, keystore_file: str, password: str) -> None:
         self.score_address_ = score_address
@@ -31,14 +36,15 @@ class ScoreHandler:
                         .params(params)\
                         .build()
         result = self.icon_service.call(call)
-        print(result)
+        for obj in result:
+            self.pp.pprint(obj)
         return result
 
     def writeTransaction(self, method: str, params: []) -> {}:
         transaction = CallTransactionBuilder()\
                       .from_(self.wallet_.get_address())\
                       .to(self.score_address_)\
-                      .step_limit(100000000)\
+                      .step_limit(1000000)\
                       .nid(3)\
                       .nonce(100)\
                       .method(method)\
