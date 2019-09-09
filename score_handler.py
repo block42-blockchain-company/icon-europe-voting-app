@@ -21,8 +21,8 @@ import pprint
 
 class ScoreHandler:
 
-    icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io", 3))
-    # icon_service = IconService(HTTPProvider("http://localhost:9000", 3))
+    # icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io", 3))
+    icon_service = IconService(HTTPProvider("http://localhost:9000", 3))
     pp = pprint.PrettyPrinter(indent=4)
 
     def __init__(self, score_address: str, keystore_file: str, password: str) -> None:
@@ -44,7 +44,7 @@ class ScoreHandler:
         transaction = CallTransactionBuilder()\
                       .from_(self.wallet_.get_address())\
                       .to(self.score_address_)\
-                      .step_limit(1000000)\
+                      .step_limit(10000000)\
                       .nid(3)\
                       .nonce(100)\
                       .method(method)\

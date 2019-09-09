@@ -6,11 +6,11 @@ if __name__ == "__main__":
 
     #cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075 <--- testnet smartcontract
 
-    score_address = "cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075" #<-- Replace with your score address
-    # keystore_file = "./keystore_test1"
-    # password = "test1_Account"
-    keystore_file = "./keystore_test2"
-    password = "@icon123"
+    score_address = "cx41bbbfb3aba3c383e0e2f222203a4c3f462f83e3" #<-- Replace with your score address
+    keystore_file = "./keystore_test1"
+    password = "test1_Account"
+    # keystore_file = "./keystore_test2"
+    # password = "@icon123"
 
 
 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
                 "poll_answer_id": 1
                 }
 
-    # score_handler.writeTransaction("removeAllPolls", {})
+    score_handler.writeTransaction("removeAllPolls", {})
 
 
     new_polls = [
@@ -114,9 +114,9 @@ if __name__ == "__main__":
                                   "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
     ]
-    # for it in range(len(new_polls)):
     # for it in range(4):
-    #     score_handler.writeTransaction("createPoll", new_polls[it])
+    for it in range(len(new_polls)):
+        score_handler.writeTransaction("createPoll", new_polls[it])
 
-    score_handler.writeTransaction("vote", vote_obj)
+    # score_handler.writeTransaction("vote", vote_obj)
     score_handler.readTransaction("exportPolls", {})
