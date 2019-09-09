@@ -23,6 +23,9 @@ export const ADDRESS_REQUEST = new CustomEvent( 'ICONEX_RELAY_REQUEST', { detail
 export const REQUEST_ADDRESS_BUTTON = document.getElementById("btn-wallet");
 export const VOTE_BUTTON = document.getElementById("btn-vote");
 
+//MODALS
+export const POLL_MODAL = document.getElementById("poll-modal");
+
 // ERROR Messages
 export const GET_BY_CLASSNAME_UNDEFINED = "document.getElementsByClassName(...)[0] is undefined";
 export const WALLET_UNCONNECTED = "You need to connect to your wallet first.";

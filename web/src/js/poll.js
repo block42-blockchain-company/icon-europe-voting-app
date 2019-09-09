@@ -71,7 +71,7 @@ export default class Poll
         //append buttons
         options_list.appendChild(label);
       }
-      ∆
+
       constants.VOTE_BUTTON.value = poll_id;
       constants.VOTE_BUTTON.addEventListener("click", poll.vote);
 
@@ -94,6 +94,8 @@ export default class Poll
           }
 
         IconHandler.instance.requestScoreWriteMethod(method, params)
+
+        $('#poll-modal').modal("hide");
       }
       else
       {

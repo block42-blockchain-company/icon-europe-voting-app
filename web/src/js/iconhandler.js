@@ -121,6 +121,6 @@ function responseWallet(ev)
   }
   else if( response.type == constants.JSON_RPC_RESPONSE)
   {
-    console.log(response);
+
   }
 }
