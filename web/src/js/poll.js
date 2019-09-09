@@ -71,13 +71,11 @@ export default class Poll
         //append buttons
         options_list.appendChild(label);
       }
-
+      ∆
       constants.VOTE_BUTTON.value = poll_id;
       constants.VOTE_BUTTON.addEventListener("click", poll.vote);
 
       $('#poll-modal').modal("show");
-  }
-
   }
 
   vote()
