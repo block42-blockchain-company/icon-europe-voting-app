@@ -49,36 +49,6 @@ class VotingScore(IconScoreBase):
 
         return polls
 
-    # @external(readonly=True)
-    # def exportPollById(self, poll_id: int) -> dict:
-    #     """
-    #     Export one and only specific Poll from SCORE
-    #     """
-    #     pass
-
-    # --------------------------------------------------------------------------
-    # # BUG:  Need to work on this one, since 2 polls could have the same name
-    # --------------------------------------------------------------------------
-    # @external(readonly=True)
-    # def exportPollsByName(self, poll_name: str) -> dict:
-    #     """
-    #     Exports 0,1 or more human-readable Polls
-    #     """
-    #     poll = {}
-    #
-    #     for temp_poll in self.polls_:
-    #         if loads(temp_poll).getName() == poll_name:
-    #             poll = loads(temp_poll)
-    #             break
-    #
-    #     return poll.getData()
-
-    # @external
-    # def addPollAnswer(self, poll_id: int, poll_entry: str) -> None:
-    #     current_poll = loads(self.polls_.get(poll_id))
-    #     current_poll.addCandidate(poll_entry)
-    #     self.polls_[poll_id] = dumps(current_poll)
-
     @external(readonly=True)
     def getPollAnswers(self, poll_id: int) -> dict:
         poll = Poll.deserialize(json_loads(self.polls_.get(poll_id)))
