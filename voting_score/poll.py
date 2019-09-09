@@ -21,7 +21,7 @@ class Poll:
                 new_answer["id"] = answer["id"]
                 new_answer["name"] = answer["name"]
                 new_answer["votes"] = answer["votes"]
-        temp_list.append(new_answer)
+            temp_list.append(new_answer)
         return temp_list
 
     def vote(self, answer_id: int, sender_balance: int) -> None:
