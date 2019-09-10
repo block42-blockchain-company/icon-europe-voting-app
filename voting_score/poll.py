@@ -9,7 +9,7 @@ class Poll:
         self.__answers = self.addAnswers(obj['answers'])
         self.__timestamp = obj['timestamp']
         self.__initiator = obj['initiator']
-        self.__votes = dict()
+        self.__votes = dict() if 'votes' not in obj else obj['votes']
 
     def addAnswers(self, answers: list) -> list:
         temp_list = []
@@ -27,14 +27,17 @@ class Poll:
         return temp_list
 
     def vote(self, answer_id: int, sender_balance: int, sender_address: str) -> None:
+        # if voter already voted previously
         if sender_address in self.__votes:
-            answer = self.getAnswerById(answer_id)
-            answer["votes"] = answer["votes"] + sender_balance
-            self.__votes[sender_address] = sender_balance
-        # revert( self.__votes[sender_address] )
-        # revert( sender_address )
-        # Logger.debug(sender_address)
-        # else:
+            # substract previous vote
+            prev_answer_tuple = next(iter(self.__votes[sender_address].items()))
+            prev_answer = self.getAnswerById(prev_answer_tuple[0])
+            prev_answer['votes'] = prev_answer['votes'] - prev_answer_tuple[1]
+        # add a new vote
+        answer = self.getAnswerById(answer_id)
+        answer["votes"] = answer["votes"] + sender_balance
+        self.__votes[sender_address] = {answer_id: sender_balance}
+
 
     def getId(self) -> int:
         return self.__id
