@@ -10,7 +10,7 @@ body{
   Navigation
  */
 nav {
-  background-color: #1aaaba !important;
+  background-color: #343a40 !important;
 }
 
 nav span {
@@ -18,8 +18,13 @@ nav span {
 }
 
 nav img {
-  width: 2em;
   height: 2em;
+  width: auto;
+}
+
+#main-jumbotron{
+  background-color: #1aaaba !important;
+  color: white;
 }
 
 /*
