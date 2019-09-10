@@ -60,10 +60,11 @@ class VotingScore(IconScoreBase):
 
     @external
     def vote(self, poll_id: int, poll_answer_id: int) -> None:
-        sender_balance = self.icx.get_balance(self.msg.sender)
+        sender_address = self.msg.sender
+        sender_balance = self.icx.get_balance(sender_address)
         if(sender_balance > 0):
             poll = Poll.deserialize(json_loads(self.polls_.get(poll_id)))
-            poll.vote(poll_answer_id, sender_balance)
+            poll.vote(poll_answer_id, sender_balance, str(sender_address))
             self.polls_[poll_id] = json_dumps(poll.serialize())
         else:
             revert("Throw some fking exception. Like ´no founds, my dear´")

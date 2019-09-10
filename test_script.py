@@ -29,10 +29,10 @@ if __name__ == "__main__":
     # Vote sample object
     vote_obj = {
                 "poll_id": 0,
-                "poll_answer_id": 1
+                "poll_answer_id": 0
                 }
 
-    score_handler.writeTransaction("removeAllPolls", {})
+    # score_handler.writeTransaction("removeAllPolls", {})
 
 
     new_polls = [
@@ -114,9 +114,9 @@ if __name__ == "__main__":
                                   "end": (DT.date.today() + DT.timedelta(days = 31)).strftime("%d/%m/%Y")})
         },
     ]
+    # for it in range(len(new_polls)):
     # for it in range(4):
-    for it in range(len(new_polls)):
-        score_handler.writeTransaction("createPoll", new_polls[it])
+    #     score_handler.writeTransaction("createPoll", new_polls[it])
 
-    # score_handler.writeTransaction("vote", vote_obj)
+    score_handler.writeTransaction("vote", vote_obj)
     score_handler.readTransaction("exportPolls", {})

@@ -1,3 +1,5 @@
+from iconservice import *
+
 class Poll:
     def __init__(self, obj: dict) -> None:
         self.__id = obj['id']
@@ -24,9 +26,15 @@ class Poll:
             temp_list.append(new_answer)
         return temp_list
 
-    def vote(self, answer_id: int, sender_balance: int) -> None:
-        answer = self.getAnswerById(answer_id)
-        answer["votes"] = answer["votes"] + sender_balance
+    def vote(self, answer_id: int, sender_balance: int, sender_address: str) -> None:
+        if sender_address in self.__votes:
+            answer = self.getAnswerById(answer_id)
+            answer["votes"] = answer["votes"] + sender_balance
+            self.__votes[sender_address] = sender_balance
+        # revert( self.__votes[sender_address] )
+        # revert( sender_address )
+        # Logger.debug(sender_address)
+        # else:
 
     def getId(self) -> int:
         return self.__id
@@ -51,6 +59,7 @@ class Poll:
                 "answers": self.__answers,
                 "timestamp": self.__timestamp,
                 "initiator": self.__initiator,
+                "votes": self.__votes,
                 }
 
     @staticmethod
