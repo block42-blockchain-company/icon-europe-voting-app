@@ -7,6 +7,7 @@ export default class Poll
 {
   constructor( poll_data )
   {
+    // console.log(pol_data);
     this.id = poll_data.id;
     this.name = poll_data.name;
     this.question = poll_data.question;
@@ -15,6 +16,7 @@ export default class Poll
     this.description = poll_data.description;
     this.answers = poll_data.answers;
     this.initiator = poll_data.initiator;
+    this.votes = poll_data.votes;
   }
 
   renderListView()
@@ -34,15 +36,28 @@ export default class Poll
         row.insertCell().appendChild(document.createTextNode(this[key]));
       else if ( key == "initiator")
         row.insertCell().appendChild(document.createTextNode(this[key]));
+      else if ( key == "votes")
+      {
+        if(!IconHandler.instance.wallet)
+          row.insertCell().appendChild(document.createTextNode("?"));
+        else
+        {
+          // add ✕ or ✔ to a row
+          let span = document.createElement("span");
+          span.innerHTML = this.hasUserVoted() ? '&#10004' : '&#10005';
+          row.insertCell().appendChild(span);
+        }
+      }
     }
 
     row.addEventListener( "click", this.renderDetailView);
   }
 
+
   renderDetailView()
   {
       let poll_id = parseInt(this.id.split("-")[1]);
-      let poll = getPollByID( poll_id ) //split id from string --> maybe write function to this???!?
+      let poll = getPollByID( poll_id )
       let options_list = document.getElementById("options-list");
 
       // insert name, valiue and question
@@ -67,6 +82,13 @@ export default class Poll
         input.setAttribute("value", poll.answers[it].id);
         input.setAttribute("autocomplete", "off");
         label.appendChild(input);
+
+        //highlight button if voted for that answer already
+        if(poll.hasUserVoted() &&
+           parseInt(Object.keys(poll.votes['hxe7af5fcfd8dfc67530a01a0e403882687528dfcb'])[0]) === poll.answers[it].id)
+        {
+          label.classList.add("active");
+        }
 
         //append buttons
         options_list.appendChild(label);
@@ -108,6 +130,11 @@ export default class Poll
         alert("You need to chose one answer");
       }
     }
+  }
+
+  hasUserVoted()
+  {
+    return this.votes.hasOwnProperty('hxe7af5fcfd8dfc67530a01a0e403882687528dfcb');
   }
 
 }
