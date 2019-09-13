@@ -1,11 +1,12 @@
-import Poll, { renderList } from './poll.js'
+import Poll, { renderPolls, storePolls } from './poll.js'
 import IconHandler from './iconhandler.js'
 
 
 function main()
 {
   IconHandler.instance.requestScoreReadMethod("exportPolls", {} )
-                      .then(renderList)
+                      .then(storePolls)
+                      .then(renderPolls)
 }
 
 window.onload = main();

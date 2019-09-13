@@ -7,7 +7,6 @@ export default class Poll
 {
   constructor( poll_data )
   {
-    // console.log(pol_data);
     this.id = poll_data.id;
     this.name = poll_data.name;
     this.question = poll_data.question;
@@ -21,7 +20,7 @@ export default class Poll
 
   renderListView()
   {
-    let tbody = document.getElementById("polls-table").getElementsByTagName("tbody")[0];
+    let tbody = constants.TABLE.getElementsByTagName("tbody")[0];
     let row = tbody.insertRow();
 
     row.setAttribute("id", "poll-" + this.id);
@@ -42,62 +41,60 @@ export default class Poll
           row.insertCell().appendChild(document.createTextNode("?"));
         else
         {
-          // add ✕ or ✔ to a row
+          // add '✕' or '✔' to a row
           let span = document.createElement("span");
           span.innerHTML = this.hasUserVoted() ? '&#10004' : '&#10005';
           row.insertCell().appendChild(span);
         }
       }
     }
-
     row.addEventListener( "click", this.renderDetailView);
   }
 
-
   renderDetailView()
   {
-      let poll_id = parseInt(this.id.split("-")[1]);
-      let poll = getPollByID( poll_id )
-      let options_list = document.getElementById("options-list");
+    let poll_id = parseInt(this.id.split("-")[1]);
+    let poll = getPollByID( poll_id )
+    let options_list = document.getElementById("options-list");
 
-      // insert name, valiue and question
-      options_list.value = poll_id;
-      document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
-      document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
+    // insert name, valiue and question
+    options_list.value = poll_id;
+    document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
+    document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
 
-      //list voting answers
-      for( var it in poll.answers)
+    //list voting answers
+    for( var it in poll.answers)
+    {
+      if(it == 0 && options_list.children.length) //clear previous buttons
+        options_list.innerHTML = "";
+
+      // create buttons
+      let label = document.createElement("label");
+      label.setAttribute("class", "btn btn-light btn-lg btn-block")
+      label.innerHTML = poll.answers[it].name;
+
+      let input = document.createElement("input");
+      input.setAttribute("type", "radio");
+      input.setAttribute("name", "options");
+      input.setAttribute("value", poll.answers[it].id);
+      input.setAttribute("autocomplete", "off");
+      label.appendChild(input);
+
+      //highlight button if voted for that answer already
+      if(poll.hasUserVoted() &&
+         parseInt(Object.keys(poll.votes[IconHandler.instance.wallet])[0] ) === poll.answers[it].id)
       {
-        if(it == 0 && options_list.children.length) //clear previous buttons
-          options_list.innerHTML = "";
-
-        // create buttons
-        let label = document.createElement("label");
-        label.setAttribute("class", "btn btn-light btn-lg btn-block")
-        label.innerHTML = poll.answers[it].name;
-
-        let input = document.createElement("input");
-        input.setAttribute("type", "radio");
-        input.setAttribute("name", "options");
-        input.setAttribute("value", poll.answers[it].id);
-        input.setAttribute("autocomplete", "off");
-        label.appendChild(input);
-
-        //highlight button if voted for that answer already
-        if(poll.hasUserVoted() &&
-           parseInt(Object.keys(poll.votes['hxe7af5fcfd8dfc67530a01a0e403882687528dfcb'])[0]) === poll.answers[it].id)
-        {
-          label.classList.add("active");
-        }
-
-        //append buttons
-        options_list.appendChild(label);
+        label.classList.add("active");
       }
 
-      constants.VOTE_BUTTON.value = poll_id;
-      constants.VOTE_BUTTON.addEventListener("click", poll.vote);
+      //append buttons
+      options_list.appendChild(label);
+    }
 
-      $('#poll-modal').modal("show");
+    constants.VOTE_BUTTON.value = poll_id;
+    constants.VOTE_BUTTON.addEventListener("click", poll.vote);
+
+    $('#poll-modal').modal("show");
   }
 
   vote()
@@ -111,13 +108,11 @@ export default class Poll
       {
         let method ="vote";
         let params = {
-            "poll_id" : poll_id.toString(16),
-            "poll_answer_id" : answer_id.toString(16)
+            "poll_id" : poll_id.toString(),
+            "poll_answer_id" : answer_id.toString()
           }
 
-        IconHandler.instance.requestScoreWriteMethod(method, params)
-
-        $('#poll-modal').modal("hide");
+        IconHandler.instance.requestScoreWriteMethod(method, params);
       }
       else
       {
@@ -134,20 +129,37 @@ export default class Poll
 
   hasUserVoted()
   {
-    return this.votes.hasOwnProperty('hxe7af5fcfd8dfc67530a01a0e403882687528dfcb');
+    return this.votes.hasOwnProperty(IconHandler.instance.wallet);
   }
-
 }
 
-export function renderList( polls_data )
+export function updateAlreadyVotedCol()
 {
-  for( var it in polls_data)
-  {
-    var poll = new Poll(JSON.parse(polls_data[it]));
-    poll.renderListView();
+  let t_body = constants.TABLE.getElementsByTagName("tbody")[0]
 
-    polls.push(poll);
+  for( let it in polls )
+  {
+    // add '✕' or '✔' to a row
+    let span = document.createElement("span");
+    let poll_DOM = document.getElementById("poll-" + polls[it].id);
+
+    poll_DOM.children[4].innerHTML = ""
+    span.innerHTML = polls[it].hasUserVoted() ? '&#10004' : '&#10005';
+    poll_DOM.children[4].appendChild(span);
   }
+}
+
+export function renderPolls()
+{
+  for( var it in polls)
+    polls[it].renderListView()
+}
+
+export function storePolls( polls_data )
+{
+  polls = [];
+  for( var it in polls_data)
+    polls.push(new Poll(JSON.parse(polls_data[it])));
 }
 
 function getPollByID( poll_id )

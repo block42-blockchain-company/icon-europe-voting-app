@@ -1,5 +1,9 @@
 import * as constants from './constants.js';
+<<<<<<< HEAD
 import * as cookieUtils from './cookieUtils.js';
+=======
+import { updateAlreadyVotedCol, storePolls } from './poll.js'
+>>>>>>> Updating polls in client after voting
 
 const iconService = window['icon-sdk-js'];
 const httpProvider = new iconService(new iconService.HttpProvider(constants.TESTNET_URL))
@@ -115,8 +119,6 @@ function responseWallet(ev)
 {
   let response = ev.detail;
 
-  console.log(response);
-
   if(response.type == constants.HAS_ACCOUNT_RESPONSE)
   {
     if(response.payload.hasAccount)
@@ -126,12 +128,31 @@ function responseWallet(ev)
   }
   else if(response.type == constants.ADDRESS_RESPONSE )
   {
+    //save wallet address
     _instance._wallet = response.payload;
     constants.REQUEST_ADDRESS_BUTTON.innerHTML = response.payload;
+<<<<<<< HEAD
     cookieUtils.setCookie(constants.COOKIE_NAME_WALLET_ADDRESS, response.payload, constants.COOKIE_EXPIRATION_DAYS)
+=======
+
+    constants.REQUEST_ADDRESS_BUTTON.removeEventListener("click", requestWallet);
+
+    //update table
+    updateAlreadyVotedCol();
+>>>>>>> Updating polls in client after voting
   }
   else if( response.type == constants.JSON_RPC_RESPONSE)
   {
+    $('#poll-modal').modal("hide");
+
+    //fetch new data and update data
+    setTimeout(function(){
+      _instance.requestScoreReadMethod("exportPolls", {})
+      .then(storePolls)
+      .then(updateAlreadyVotedCol)
+    }, 4000);
+
+
 
   }
 }
