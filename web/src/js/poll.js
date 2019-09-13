@@ -74,8 +74,7 @@ export default class Poll
       button.addEventListener("click", poll.choseAnswer);
 
       //highlight button if user voted for that answer already
-      if(poll.hasUserVoted() &&
-         parseInt(Object.keys(poll.votes[IconHandler.instance.wallet])[0] ) === poll.answers[it].id)
+      if(poll.hasUserVoted() && poll.getUserVote() === poll.answers[it].id)
       {
         button.classList.remove("btn-light");
         button.classList.add("btn-info");
@@ -85,11 +84,8 @@ export default class Poll
       options_list.appendChild(button);
     }
 
-    console.log(vote_button);
-
     vote_button.DOM.addEventListener("click", poll.vote);
-    vote_button.disable();
-    vote_button.innerHTML = "Vote";
+    vote_button.disableVote();
 
     $('#poll-modal').modal("show");
   }
@@ -112,31 +108,18 @@ export default class Poll
 
   choseAnswer()
   {
-    console.log(this.firstChild);
     let poll_id = document.getElementById("options-list").value;
     let answer_id = this.children[0].value;
 
     if( getPollByID(poll_id).hasUserVoted() )
     {
-      let user_voted_answer = document.getElementsByClassName("btn-info")[0];
-
-      if( user_voted_answer.children[0].value == answer_id )
-      {
-        vote_button.disable();
-        vote_button.innerHTML = "Already voted"
-      }
+      if( getPollByID(poll_id).getUserVote() == answer_id )
+        vote_button.disableVote();
       else
-      {
-        console.log(vote_button);
-        vote_button.innerHTML = "Change Vote";
-        vote_button.enable();
-      }
+        vote_button.changeVote();
     }
     else
-    {
-      vote_button.enable();
-      vote_button.innerHTML = "Vote";
-    }
+      vote_button.enableVote();
   }
 
   vote()
@@ -171,9 +154,12 @@ export default class Poll
   {
     return this.votes.hasOwnProperty(IconHandler.instance.wallet);
   }
+
+  getUserVote()
+  {
+    return parseInt(Object.keys(this.votes[IconHandler.instance.wallet])[0]);
+  }
 }
-
-
 
 export function updateAlreadyVotedCol()
 {
@@ -210,9 +196,11 @@ function getPollByID( poll_id )
     if(polls[obj].id === poll_id)
       return polls[obj]
 }
+
 /**
-  Object holding usefull methods for vote Button in Modal
+  Object holding usefull methods for vote Button in Modal view
 */
+
 let vote_button = {
   get DOM() {
     return document.getElementById("btn-vote");
@@ -220,14 +208,19 @@ let vote_button = {
   set innerHTML( text ) {
     this.DOM.innerHTML = text;
   },
-  disable : function(){
-    console.log("disabliing");
+  disableVote : function(){
     this.DOM.classList.add("disabled");
     this.DOM.setAttribute("disabled", true);
+    this.innerHTML = "Vote";
   },
-  enable : function() {
-    console.log("enabling");
+  enableVote : function() {
     this.DOM.classList.remove("disabled");
     this.DOM.removeAttribute("disabled");
+    this.innerHTML = "Vote";
+  },
+  changeVote : function() {
+    this.DOM.classList.remove("disabled");
+    this.DOM.removeAttribute("disabled");
+    this.innerHTML = "Change Vote";
   }
 }

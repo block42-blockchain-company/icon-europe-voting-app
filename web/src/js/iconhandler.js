@@ -144,7 +144,5 @@ function responseWallet(ev)
       .then(updateAlreadyVotedCol)
     }, 4000);
 
-
-
   }
 }

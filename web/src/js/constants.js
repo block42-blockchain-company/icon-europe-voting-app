@@ -2,8 +2,8 @@
 export const SCORE_ADDRESS = "cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075"
 
 // URLS
-export const TESTNET_URL = 'https://bicon.net.solidwallet.io/api/v3'
-export const LOCALHOST_URL = 'http://localhost:9000/api/v3'
+export const TESTNET_URL = 'https://bicon.net.solidwallet.io/api/v3';
+export const LOCALHOST_URL = 'http://localhost:9000/api/v3';
 
 //ICONEX wallet responses
 export const ICONEX_RESPONSE = "ICONEX_RELAY_RESPONSE"; //Iconex parent response
@@ -31,9 +31,6 @@ export const POLL_MODAL = document.getElementById("poll-modal");
 // ERROR Messages
 export const GET_BY_CLASSNAME_UNDEFINED = "document.getElementsByClassName(...)[0] is undefined";
 export const WALLET_UNCONNECTED = "You need to connect to your wallet first.";
-
-//char colors
-export const CHART_LABELS = ['Red', 'Blue', 'Yellow']
 
 //COOKIES
 export const COOKIE_NAME_WALLET_ADDRESS = "wallet_address"
