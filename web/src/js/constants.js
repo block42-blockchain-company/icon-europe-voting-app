@@ -21,7 +21,6 @@ export const ADDRESS_REQUEST = new CustomEvent( 'ICONEX_RELAY_REQUEST', { detail
 
 //BUTTONS
 export const REQUEST_ADDRESS_BUTTON = document.getElementById("btn-wallet");
-export const VOTE_BUTTON = document.getElementById("btn-vote");
 
 //Table
 export const TABLE = document.getElementById("polls-table");

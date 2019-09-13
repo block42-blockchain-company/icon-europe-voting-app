@@ -79,15 +79,17 @@ export default class Poll
       {
         button.classList.remove("btn-light");
         button.classList.add("btn-info");
-        constants.VOTE_BUTTON.classList.add("disabled");
-        constants.VOTE_BUTTON.setAttribute("disabled", true)
       }
 
       //append buttons
       options_list.appendChild(button);
     }
 
-    constants.VOTE_BUTTON.addEventListener("click", poll.vote);
+    console.log(vote_button);
+
+    vote_button.DOM.addEventListener("click", poll.vote);
+    vote_button.disable();
+    vote_button.innerHTML = "Vote";
 
     $('#poll-modal').modal("show");
   }
@@ -110,6 +112,7 @@ export default class Poll
 
   choseAnswer()
   {
+    console.log(this.firstChild);
     let poll_id = document.getElementById("options-list").value;
     let answer_id = this.children[0].value;
 
@@ -119,20 +122,20 @@ export default class Poll
 
       if( user_voted_answer.children[0].value == answer_id )
       {
-        constants.VOTE_BUTTON.classList.add("disabled");
-        constants.VOTE_BUTTON.setAttribute("disabled", true)
+        vote_button.disable();
+        vote_button.innerHTML = "Already voted"
       }
       else
       {
-        constants.VOTE_BUTTON.classList.remove("disabled");
-        constants.VOTE_BUTTON.setAttribute("disabled", false);
-
-        constants.VOTE_BUTTON.innerHTML = "Change Vote";
+        console.log(vote_button);
+        vote_button.innerHTML = "Change Vote";
+        vote_button.enable();
       }
-
     }
-    else {
-      constants.VOTE_BUTTON.innerHTML = "Vote";
+    else
+    {
+      vote_button.enable();
+      vote_button.innerHTML = "Vote";
     }
   }
 
@@ -170,6 +173,8 @@ export default class Poll
   }
 }
 
+
+
 export function updateAlreadyVotedCol()
 {
   let t_body = constants.TABLE.getElementsByTagName("tbody")[0]
@@ -204,4 +209,25 @@ function getPollByID( poll_id )
   for( let obj in polls)
     if(polls[obj].id === poll_id)
       return polls[obj]
+}
+/**
+  Object holding usefull methods for vote Button in Modal
+*/
+let vote_button = {
+  get DOM() {
+    return document.getElementById("btn-vote");
+  },
+  set innerHTML( text ) {
+    this.DOM.innerHTML = text;
+  },
+  disable : function(){
+    console.log("disabliing");
+    this.DOM.classList.add("disabled");
+    this.DOM.setAttribute("disabled", true);
+  },
+  enable : function() {
+    console.log("enabling");
+    this.DOM.classList.remove("disabled");
+    this.DOM.removeAttribute("disabled");
+  }
 }
