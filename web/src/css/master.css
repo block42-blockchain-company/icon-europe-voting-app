@@ -50,6 +50,10 @@ nav img {
   width: 80%;
 }
 
+#poll-modal .disabled{
+  cursor: not-allowed;
+}
+
 /*
   Footer
  */

@@ -57,7 +57,7 @@ export default class Poll
     let poll = getPollByID( poll_id )
     let options_list = document.getElementById("options-list");
 
-    // insert name, valiue and question
+    // insert name, value and question
     options_list.value = poll_id;
     document.getElementsByClassName("poll-title")[0].innerHTML = poll.name;
     document.getElementsByClassName("poll-question")[0].innerHTML = poll.question;
@@ -65,36 +65,75 @@ export default class Poll
     //list voting answers
     for( var it in poll.answers)
     {
-      if(it == 0 && options_list.children.length) //clear previous buttons
+      // clear previous buttons if any
+      if(it == 0 && options_list.children.length)
         options_list.innerHTML = "";
 
-      // create buttons
-      let label = document.createElement("label");
-      label.setAttribute("class", "btn btn-light btn-lg btn-block")
-      label.innerHTML = poll.answers[it].name;
+      // create button
+      let button = poll.createAnswerButton( poll.answers[it] )
+      button.addEventListener("click", poll.choseAnswer);
 
-      let input = document.createElement("input");
-      input.setAttribute("type", "radio");
-      input.setAttribute("name", "options");
-      input.setAttribute("value", poll.answers[it].id);
-      input.setAttribute("autocomplete", "off");
-      label.appendChild(input);
-
-      //highlight button if voted for that answer already
+      //highlight button if user voted for that answer already
       if(poll.hasUserVoted() &&
          parseInt(Object.keys(poll.votes[IconHandler.instance.wallet])[0] ) === poll.answers[it].id)
       {
-        label.classList.add("active");
+        button.classList.remove("btn-light");
+        button.classList.add("btn-info");
+        constants.VOTE_BUTTON.classList.add("disabled");
+        constants.VOTE_BUTTON.setAttribute("disabled", true)
       }
 
       //append buttons
-      options_list.appendChild(label);
+      options_list.appendChild(button);
     }
 
-    constants.VOTE_BUTTON.value = poll_id;
     constants.VOTE_BUTTON.addEventListener("click", poll.vote);
 
     $('#poll-modal').modal("show");
+  }
+
+  createAnswerButton( answer )
+  {
+    let label = document.createElement("label");
+    label.setAttribute("class", "btn btn-light btn-lg btn-block")
+    label.innerHTML = answer.name;
+
+    let input = document.createElement("input");
+    input.setAttribute("type", "radio");
+    input.setAttribute("name", "options");
+    input.setAttribute("value", answer.id);
+    input.setAttribute("autocomplete", "off");
+    label.appendChild(input);
+
+    return label;
+  }
+
+  choseAnswer()
+  {
+    let poll_id = document.getElementById("options-list").value;
+    let answer_id = this.children[0].value;
+
+    if( getPollByID(poll_id).hasUserVoted() )
+    {
+      let user_voted_answer = document.getElementsByClassName("btn-info")[0];
+
+      if( user_voted_answer.children[0].value == answer_id )
+      {
+        constants.VOTE_BUTTON.classList.add("disabled");
+        constants.VOTE_BUTTON.setAttribute("disabled", true)
+      }
+      else
+      {
+        constants.VOTE_BUTTON.classList.remove("disabled");
+        constants.VOTE_BUTTON.setAttribute("disabled", false);
+
+        constants.VOTE_BUTTON.innerHTML = "Change Vote";
+      }
+
+    }
+    else {
+      constants.VOTE_BUTTON.innerHTML = "Vote";
+    }
   }
 
   vote()
@@ -112,7 +151,7 @@ export default class Poll
             "poll_answer_id" : answer_id.toString()
           }
 
-        IconHandler.instance.requestScoreWriteMethod(method, params);
+      IconHandler.instance.requestScoreWriteMethod(method, params);
       }
       else
       {
@@ -121,9 +160,7 @@ export default class Poll
       }
     } catch (e) {
       if(e.message == constants.GET_BY_CLASSNAME_UNDEFINED)
-      {
         alert("You need to chose one answer");
-      }
     }
   }
 
