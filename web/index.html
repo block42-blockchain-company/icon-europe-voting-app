@@ -52,6 +52,10 @@
 
   </head>
   <body>
+    <!-- helper container for footer manipulation -->
+    <div id="page-container">
+      <!-- helper container for footer manipulation -->
+      <div id="content-wrap">
       <!-- Heading -->
       <nav class="navbar">
         <div class="container">
@@ -70,7 +74,7 @@
         </div>
       </section>
 
-      <!-- listt all polls -->
+      <!-- list all polls -->
       <section id="polls-list">
         <div class="container">
           <table class="table table-hover table-striped" id="polls-table">
@@ -119,10 +123,10 @@
           </div>
         </div>
       </div>
-
+      </div>
       <!-- Footer -->
-      <footer class="py-5 bg-dark fixed-bottom" >
-       <div class="container">
+      <footer class="pt-5" >
+       <div id="footer-div" class="container-fluid bg-dark">
          <div class="text-center">
            <span><a href="https://twitter.com/block42_company" target="_blank"><img class="social" src="src/img/twitter.png" alt="Twitter"></a></span>
            <span><a href="https://github.com/block42-blockchain-company/icon-europe-voting-app" target="_blank"><img class="social" src="src/img/github.png" alt="GitHub"></a></span>
@@ -132,6 +136,6 @@
        </div>
       </footer>
 
-
+    <div>
   </body>
 </html>

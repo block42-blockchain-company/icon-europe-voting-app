@@ -16,6 +16,7 @@ https://www.icondev.io/docs/score-overview
 
 coding:
 https://www.knowledgehut.com/tutorials/python-tutorial/python-object-serialization
+https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
 
 reference code:
 https://github.com/iconation/BattleBombRoyale

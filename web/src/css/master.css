@@ -5,6 +5,15 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 12rem;    /* Footer height */
+}
+
 
 /*
   Navigation
@@ -57,15 +66,23 @@ nav img {
 /*
   Footer
  */
- footer .social
- {
-   height: 40px;
-    width: 40px;
-    margin-right: 5px;
-    margin-left: 5px;
-    margin-bottom: 1em;
- }
+#footer-div {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 12rem;
+}
 
- #copyright {
-     color: gray !important;
- }
+footer .social
+{
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#copyright {
+    color: gray !important;
+}
