@@ -1,6 +1,7 @@
 //score_address
 export const SCORE_ADDRESS = "cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075"
 
+
 // URLS
 export const TESTNET_URL = 'https://bicon.net.solidwallet.io/api/v3';
 export const LOCALHOST_URL = 'http://localhost:9000/api/v3';
