@@ -37,15 +37,15 @@ export default class Poll
         row.insertCell().appendChild(document.createTextNode(this[key]));
       else if ( key == "votes")
       {
+        let span = document.createElement("span");
+        span.setAttribute("class", "badge badge-info")
+
         if(!IconHandler.instance.wallet)
-          row.insertCell().appendChild(document.createTextNode("?"));
-        else
-        {
-          // add '✕' or '✔' to a row
-          let span = document.createElement("span");
+          span.innerHTML = "?";
+        else // add '✕' or '✔' to a row
           span.innerHTML = this.hasUserVoted() ? '&#10004' : '&#10005';
-          row.insertCell().appendChild(span);
-        }
+
+        row.insertCell().appendChild(span);
       }
     }
     row.addEventListener( "click", this.renderDetailView);
@@ -170,6 +170,7 @@ export function updateAlreadyVotedCol()
     // add '✕' or '✔' to a row
     let span = document.createElement("span");
     let poll_DOM = document.getElementById("poll-" + polls[it].id);
+    span.setAttribute("class", "badge badge-info")
 
     poll_DOM.children[4].innerHTML = ""
     span.innerHTML = polls[it].hasUserVoted() ? '&#10004' : '&#10005';
@@ -200,7 +201,6 @@ function getPollByID( poll_id )
 /**
   Object holding usefull methods for vote Button in Modal view
 */
-
 let vote_button = {
   get DOM() {
     return document.getElementById("btn-vote");
