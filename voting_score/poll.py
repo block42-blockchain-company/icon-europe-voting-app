@@ -5,7 +5,6 @@ class Poll:
         self.__id = obj['id']
         self.__name = obj['name']
         self.__question = obj['question']
-        self.__description = str()
         self.__answers = self.addAnswers(obj['answers'])
         self.__timestamp = obj['timestamp']
         self.__initiator = obj['initiator']
@@ -58,7 +57,6 @@ class Poll:
                 "id": self.__id,
                 "name": self.__name,
                 "question": self.__question,
-                "description": self.__description,
                 "answers": self.__answers,
                 "timestamp": self.__timestamp,
                 "initiator": self.__initiator,
