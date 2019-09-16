@@ -38,12 +38,11 @@ export default class Poll
       else if ( key == "votes")
       {
         let span = document.createElement("span");
-        span.setAttribute("class", "badge badge-info")
+        span.setAttribute("class", "badge badge-info badge-voted")
 
-        if(!IconHandler.instance.wallet)
-          span.innerHTML = "?";
-        else // add '✕' or '✔' to a row
-          span.innerHTML = this.hasUserVoted() ? '&#10004' : '&#10005';
+        span.innerHTML = (!IconHandler.instance.wallet)
+        ? "?"
+        : this.hasUserVoted() ? this.answers[this.getUserVote()].name : '&#10005'; // add '✕' or an answer to a row
 
         row.insertCell().appendChild(span);
       }
@@ -168,13 +167,10 @@ export function updateAlreadyVotedCol()
   for( let it in polls )
   {
     // add '✕' or '✔' to a row
-    let span = document.createElement("span");
-    let poll_DOM = document.getElementById("poll-" + polls[it].id);
-    span.setAttribute("class", "badge badge-info")
-
-    poll_DOM.children[4].innerHTML = ""
-    span.innerHTML = polls[it].hasUserVoted() ? '&#10004' : '&#10005';
-    poll_DOM.children[4].appendChild(span);
+    let badge = document.getElementById("poll-" + polls[it].id).children[4].firstChild;
+    badge.innerHTML = ( polls[it].hasUserVoted())
+    ? polls[it].answers[polls[it].getUserVote()].name
+    : '&#10005';
   }
 }
 
@@ -186,6 +182,7 @@ export function renderPolls()
 
 export function storePolls( polls_data )
 {
+  console.log("storing");
   polls = [];
   for( var it in polls_data)
     polls.push(new Poll(JSON.parse(polls_data[it])));
