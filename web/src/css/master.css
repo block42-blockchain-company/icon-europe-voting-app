@@ -84,5 +84,10 @@ footer .social
 }
 
 #copyright {
-    color: gray !important;
+  color: gray !important;
+}
+
+#copyright a, #copyright a:hover, #copyright a:focus, #copyright a:active {
+  color: gray !important;
+  text-decoration: none;
 }
