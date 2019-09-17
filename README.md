@@ -1,12 +1,13 @@
 # Voting dApp for ICON Europe 🇪🇺🗳
 
-Community governance tool to incorporate european ICONists into the decision making process of its P-Reps.
+An ICON Europe community governance tool to incorporate European ICONists into the decision making process of its P-Reps.
 
-Execute command bellow, which creates, runs and attaches to docker container.
+![image](https://user-images.githubusercontent.com/6087393/65041944-1f7ac600-d958-11e9-9620-d52368f9e9e1.png)
 
-```
-docker run -it --name icon-europe-voting-app -p 9000:9000 -v <path/to/the/repo>:/work iconloop/tbears:mainnet
-```
+## Read More
+
+1. https://medium.com/block42-blockchain-company/icon-europe-community-voting-dapp-the-new-era-begins-5b8d86d01045
+2. https://medium.com/block42-blockchain-company/icon-europe-community-voting-dapp-first-version-out-now-3d4280e6f8bb
 
 ## License
 
