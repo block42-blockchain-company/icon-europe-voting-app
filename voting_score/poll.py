@@ -12,16 +12,11 @@ class Poll:
 
     def addAnswers(self, answers: list) -> list:
         temp_list = []
-        for answer in answers:
+        for ans in answers:
             new_answer = dict()
-            if isinstance(answers[0], str):
-                new_answer["id"] = len(temp_list)
-                new_answer["name"] = answer
-                new_answer["votes"] = 0
-            else:
-                new_answer["id"] = answer["id"]
-                new_answer["name"] = answer["name"]
-                new_answer["votes"] = answer["votes"]
+            new_answer["id"] = len(temp_list) if 'id' not in ans else ans['id']
+            new_answer["name"] = ans if 'name' not in ans else ans['name']
+            new_answer["votes"] = 0 if 'votes' not in ans else ans['votes']
             temp_list.append(new_answer)
         return temp_list
 
