@@ -1,6 +1,18 @@
 # Voting dApp for ICON Europe 🇪🇺🗳
 
-An ICON Europe community governance tool to incorporate European ICONists into the decision making process of its P-Reps.
+<div>
+  <a href="https://vote.icon-europe.community">
+    <img src="https://img.shields.io/badge/status-testnet-brightgreen.svg" alt="Live" />
+  </a>
+  <a href="https://t.me/IconEurope">
+    <img src="https://img.shields.io/badge/chat-telegram-blue.svg" alt="Telegram" />
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License" />
+  </a>
+</div>
+
+<br>
 
 ![image](https://user-images.githubusercontent.com/6087393/65041944-1f7ac600-d958-11e9-9620-d52368f9e9e1.png)
 
