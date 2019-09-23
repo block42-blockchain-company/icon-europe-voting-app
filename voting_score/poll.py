@@ -11,7 +11,7 @@ class Poll(object):
         self.__name = obj['name']
         self.__question = obj['question']
         self.__answers = self.addAnswers(obj['answers'])
-        self.__timestamp = obj['timestamp']
+        self.__time_frame = obj['time_frame']
         self.__initiator = obj['initiator']
         self.__voters = ArrayDB(f"{self._VOTERS}{self.__id}", db, value_type = str)
         self.__voters_choice = ArrayDB(f"{self._VOTERS_CHOICE}{self.__id}", db, value_type = int)
@@ -43,13 +43,19 @@ class Poll(object):
     def getName(self) -> str:
         return self.__name
 
+    def getPollStartBlock(self) -> int:
+        return int(self.__time_frame['start'])
+
+    def getPollEndBlock(self) -> int:
+        return int(self.__time_frame['end'])
+
     def serialize(self) -> dict:
         return {
                 "id": self.__id,
                 "name": self.__name,
                 "question": self.__question,
                 "answers": self.__answers,
-                "timestamp": self.__timestamp,
+                "time_frame": self.__time_frame,
                 "initiator": self.__initiator,
                 }
 
