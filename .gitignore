@@ -180,6 +180,8 @@ tbears_server_config.json
 
 score_handler.py
 test_script.py
+keystores/
+
 
 ### TEST FILES ####
 
