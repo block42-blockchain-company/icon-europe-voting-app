@@ -1,14 +1,20 @@
 from iconservice import *
 
-class Poll:
-    def __init__(self, obj: dict) -> None:
+
+class Poll(object):
+
+    _VOTERS = "VOTERS_"
+    _VOTERS_CHOICE = "VOTERS_CHOICE_"
+
+    def __init__(self, obj: dict, db: IconScoreDatabase) -> None:
         self.__id = obj['id']
         self.__name = obj['name']
         self.__question = obj['question']
         self.__answers = self.addAnswers(obj['answers'])
         self.__timestamp = obj['timestamp']
         self.__initiator = obj['initiator']
-        self.__voters = dict() if 'voters' not in obj else obj['voters']
+        self.__voters = ArrayDB(f"{self._VOTERS}{self.__id}", db, value_type = str)
+        self.__voters_choice = ArrayDB(f"{self._VOTERS_CHOICE}{self.__id}", db, value_type = int)
 
     def addAnswers(self, answers: list) -> list:
         temp_list = []
@@ -19,8 +25,9 @@ class Poll:
             temp_list.append(new_answer)
         return temp_list
 
-    def vote(self, answer_id: int, sender_balance: int, sender_address: str) -> None:
-        self.__voters[sender_address] = answer_id;
+    def vote(self, answer_id: int, sender_address: str) -> None:
+        self.__voters.put(sender_address)
+        self.__voters_choice.put(answer_id)
 
     def getId(self) -> int:
         return self.__id
@@ -44,9 +51,21 @@ class Poll:
                 "answers": self.__answers,
                 "timestamp": self.__timestamp,
                 "initiator": self.__initiator,
-                "voters": self.__voters,
                 }
 
     @staticmethod
-    def deserialize(obj: dict) -> 'Poll':
-        return Poll(obj)
+    def removeVotes(poll_id: int, db: IconScoreDatabase) -> None:
+        voters = ArrayDB(f"{Poll._VOTERS}{poll_id}", db, value_type = str)
+        voters_choice = ArrayDB(f"{Poll._VOTERS_CHOICE}{poll_id}", db, value_type = int)
+        while voters:
+            voters.pop()
+            voters_choice.pop()
+
+    @staticmethod
+    def exportVotes(poll_id: int, iconService: IconScoreBase) -> dict:
+        voters = ArrayDB(f"{Poll._VOTERS}{poll_id}", iconService.db, value_type = str)
+        voters_choice = ArrayDB(f"{Poll._VOTERS_CHOICE}{poll_id}", iconService.db, value_type = int)
+        votes = dict()
+        for it in range(len(voters)):
+            votes[voters[it]] = {voters_choice[it]: iconService.icx.get_balance(Address.from_string(voters[it]))}
+        return votes
