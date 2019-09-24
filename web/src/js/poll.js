@@ -7,15 +7,15 @@ export default class Poll
 {
   constructor( poll_data )
   {
-    this.id = poll_data.id;
+    this.id = parseInt(poll_data.id);
     this.name = poll_data.name;
     this.question = poll_data.question;
     this.start_date = poll_data.timestamp.start;
     this.end_date = poll_data.timestamp.end;
     this.description = poll_data.description;
-    this.answers = poll_data.answers;
+    this.answers = this.addAnswers( poll_data.answers );
     this.initiator = poll_data.initiator;
-    this.votes = poll_data.votes;
+    this.votes = poll_data.voters;
   }
 
   renderListView()
@@ -55,6 +55,7 @@ export default class Poll
     let poll_id = parseInt(this.id.split("-")[1]);
     let poll = getPollByID( poll_id )
     let options_list = document.getElementById("options-list");
+
 
     // insert name, value and question
     options_list.value = poll_id;
@@ -137,6 +138,7 @@ export default class Poll
           }
 
       IconHandler.instance.requestScoreWriteMethod(method, params);
+
       }
       else
       {
@@ -147,6 +149,17 @@ export default class Poll
       if(e.message == constants.GET_BY_CLASSNAME_UNDEFINED)
         alert("You need to chose one answer");
     }
+  }
+
+  addAnswers( answers_data )
+  {
+    answers_data.forEach(function(answer){
+      Object.keys(answer).forEach(function(key, index){
+        if(key === "id")
+          answer[key] = parseInt(answer[key])
+      });
+    })
+    return answers_data;
   }
 
   hasUserVoted()
@@ -182,10 +195,9 @@ export function renderPolls()
 
 export function storePolls( polls_data )
 {
-  console.log("storing");
   polls = [];
   for( var it in polls_data)
-    polls.push(new Poll(JSON.parse(polls_data[it])));
+    polls.push(new Poll(polls_data[it]));
 }
 
 function getPollByID( poll_id )
