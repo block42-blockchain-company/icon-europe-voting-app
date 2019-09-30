@@ -17,14 +17,23 @@ class VotingScore(IconScoreBase):
     def on_update(self) -> None:
         super().on_update()
 
+    def checkPollActive(self, poll_id: int) -> bool:
+        poll_end_block = Poll(json_loads(self.polls_.get(poll_id)), self.db).getPollEndBlock()
+        poll_start_block = Poll(json_loads(self.polls_.get(poll_id)), self.db).getPollStartBlock()
+
+        if(self.block_height <= poll_end_block and self.block_height >= poll_start_block):
+            return True
+        else:
+            return False
+
     @external
-    def createPoll(self, name: str, question: str, answers: str, timestamp: str) -> None:
+    def createPoll(self, name: str, question: str, answers: str, time_frame: str) -> None:
         poll_dict = {
             "id": self.generatePollID(),
             "name": name,
             "question": question,
             "answers" : json_loads(answers),
-            "timestamp": json_loads(timestamp),
+            "time_frame": json_loads(time_frame),
             "initiator": str(self.msg.sender)
         }
         self.polls_.put(json_dumps(Poll(poll_dict, self.db).serialize()))
@@ -60,8 +69,12 @@ class VotingScore(IconScoreBase):
     def vote(self, poll_id: int, poll_answer_id: int) -> None:
         sender_address = self.msg.sender
         sender_balance = self.icx.get_balance(sender_address)
+
+        if(self.checkPollActive(poll_id) == False):
+            revert("Throw some fking exception. Like ´Poll is already finished, my dear´")
+
         if(sender_balance > 0):
             poll = Poll(json_loads(self.polls_.get(poll_id)), self.db)
             poll.vote(poll_answer_id, str(sender_address))
         else:
-            revert("Throw some fking exception. Like ´no founds, my dear´")
+            revert("Throw some fking exception. Like ´no funds, my dear´")
