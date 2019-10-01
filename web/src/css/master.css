@@ -64,7 +64,23 @@ nav img {
 }
 
 /*
-  Footer
+Toast
+*/
+
+.toast{
+  position: fixed;
+  bottom: 5em;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  background-color: #1aaaba !important;
+  color: white;
+}
+.toast span{
+  color: white;
+}
+/*
+  Footer5
  */
 #footer-div {
   position: absolute;

@@ -1,6 +1,7 @@
 import * as constants from './constants.js';
 import { updateAlreadyVotedCol, storePolls } from './poll.js'
 import * as cookieUtils from './cookieUtils.js';
+import Toast from './toast.js'
 
 const iconService = window['icon-sdk-js'];
 const httpProvider = new iconService(new iconService.HttpProvider(constants.TESTNET_URL))
@@ -25,6 +26,7 @@ export default class IconHandler
       {
         this._wallet = wallet_address;
         constants.REQUEST_ADDRESS_BUTTON.innerHTML = wallet_address;
+        new Toast("Welcome back!");
       }
       else
       {
@@ -129,6 +131,8 @@ function responseWallet(ev)
     _instance._wallet = response.payload;
     constants.REQUEST_ADDRESS_BUTTON.innerHTML = response.payload;
     cookieUtils.setCookie(constants.COOKIE_NAME_WALLET_ADDRESS, response.payload, constants.COOKIE_EXPIRATION_DAYS)
+
+    new Toast("You successfully logged in with your wallet!");
 
     //update table
     updateAlreadyVotedCol();
