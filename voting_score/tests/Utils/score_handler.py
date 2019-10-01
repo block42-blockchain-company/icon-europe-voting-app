@@ -14,15 +14,17 @@ from iconsdk.signed_transaction import SignedTransaction
 from iconsdk.builder.call_builder import CallBuilder
 
 from pickle import dumps, loads
-import json
-import pprint
+import json,os, re, pprint
 
+class ScoreHandler():
 
+    @staticmethod
+    def getNetworkUrl() -> str:
+        with open("tbears_cli_config.json", 'r+') as f:
+            data = json.load(f)
+            return data['uri'].replace("/api/v3", "")
 
-class ScoreHandler:
-
-    #icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io", 3))
-    icon_service = IconService(HTTPProvider("http://localhost:9000", 3))
+    icon_service = IconService(HTTPProvider(getNetworkUrl.__func__(), 3))
     pp = pprint.PrettyPrinter(indent=4)
 
     def __init__(self, score_address: str, keystore_file: str, password: str) -> None:
@@ -72,6 +74,3 @@ class ScoreHandler:
 
     def getLatestBlock(self) -> int:
         return self.icon_service.get_block('latest')
-
-
-

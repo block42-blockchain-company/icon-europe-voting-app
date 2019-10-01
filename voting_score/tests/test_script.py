@@ -1,17 +1,17 @@
 from Utils.score_handler import ScoreHandler
-import json
+import json, os
 import datetime as DT
 
 if __name__ == "__main__":
 
-    score_address = "cx465751fea4e4c9cbe39243a7610187ec31734044" #<-- Replace with your score address
+    score_address = "cxd4ae20043df46a1ad8a4f26e4138a8c8cfc042e9" #<-- Replace with your score address
     #cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075 <--- testnet smartcontract
 
     #keystore_file = "./iconkeystore"
     #password = "@icon111"
-    keystore_file = "Utils/keystore_voting_test"
+    keystore_file = "/work/voting_score/tests/Utils/keystore_voting_test"
     password = "test1_Account"
-    poll_duration = 20000 #every ~2 seconds new block generated
+    poll_duration = 20000  #every ~2 seconds new block generated
 
     score_handler = ScoreHandler(score_address, keystore_file, password)
     current_block = int(score_handler.getLatestBlock()['height'])
@@ -57,6 +57,7 @@ if __name__ == "__main__":
         },
     ]
     
+
     # Sample Votes
     votes = [{
                 "poll_id": 0,
