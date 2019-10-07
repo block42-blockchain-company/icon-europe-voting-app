@@ -4,7 +4,7 @@ import * as cookieUtils from './cookieUtils.js';
 import Toast from './toast.js'
 
 const iconService = window['icon-sdk-js'];
-const httpProvider = new iconService(new iconService.HttpProvider(constants.TESTNET_URL))
+const httpProvider = new iconService(new iconService.HttpProvider(constants.NETWROK_URL))
 const iconBuilder = iconService.IconBuilder;
 const iconConverter = iconService.IconConverter;
 
@@ -19,7 +19,7 @@ export default class IconHandler
     {
       _instance = this;
 
-      this._score_address = constants.SCORE_ADDRESS;
+      this._score_address = constants.TEST_SCORE_ADDRESS;
 
       let wallet_address = cookieUtils.getCookie(constants.COOKIE_NAME_WALLET_ADDRESS);
       if (wallet_address != "")
@@ -140,6 +140,8 @@ function responseWallet(ev)
   else if( response.type == constants.JSON_RPC_RESPONSE)
   {
     $('#poll-modal').modal("hide");
+
+    console.log(response);
 
     //fetch new data and update data
     setTimeout(function(){

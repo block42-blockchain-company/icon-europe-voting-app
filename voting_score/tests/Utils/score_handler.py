@@ -42,6 +42,9 @@ class ScoreHandler():
                 print(result['failure'])
             else:
                 print("[SUCCESS]")
+                if(result['eventLogs']):
+                    print("LogEvent: ", result['eventLogs'][0]['indexed'][0])
+                    print("LogData: ", result['eventLogs'][0]['data'])
 
     def readTransaction(self, method: str, params: [], verbose: bool = False) -> {}:
         call = CallBuilder()\

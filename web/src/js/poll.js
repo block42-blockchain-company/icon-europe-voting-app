@@ -7,11 +7,12 @@ export default class Poll
 {
   constructor( poll_data )
   {
+    console.log(poll_data);
     this.id = parseInt(poll_data.id);
     this.name = poll_data.name;
     this.question = poll_data.question;
-    this.start_date = poll_data.timestamp.start;
-    this.end_date = poll_data.timestamp.end;
+    this.start_date = poll_data.time_frame.start;
+    this.end_date = poll_data.time_frame.end;
     this.description = poll_data.description;
     this.answers = this.addAnswers( poll_data.answers );
     this.initiator = poll_data.initiator;

@@ -7,6 +7,14 @@ TAG = 'VotingScore'
 
 class VotingScore(IconScoreBase):
 
+    @eventlog
+    def VoteEvent(self, voter: Address, poll_id: int, answer_id: int) -> None:
+        pass
+
+    @eventlog
+    def PollCreateEvent(self, name: str) -> None:
+        pass
+
     def __init__(self, db: IconScoreDatabase) -> None:
         super().__init__(db)
         self.polls_ = ArrayDB("Polls", db, value_type = str)
@@ -26,7 +34,7 @@ class VotingScore(IconScoreBase):
         else:
             return False
 
-    @external
+    @external(readonly=False)
     def createPoll(self, name: str, question: str, answers: str, time_frame: str) -> None:
         poll_dict = {
             "id": self.generatePollID(),
@@ -37,6 +45,7 @@ class VotingScore(IconScoreBase):
             "initiator": str(self.msg.sender)
         }
         self.polls_.put(json_dumps(Poll(poll_dict, self.db).serialize()))
+        self.PollCreateEvent(name)
 
     def generatePollID(self) -> int:
         return len(self.polls_)
@@ -76,5 +85,6 @@ class VotingScore(IconScoreBase):
         if(sender_balance > 0):
             poll = Poll(json_loads(self.polls_.get(poll_id)), self.db)
             poll.vote(poll_answer_id, str(sender_address))
+            self.VoteEvent(sender_address, poll_answer_id, poll_answer_id)
         else:
             revert("Throw some fking exception. Like ´no funds, my dear´")
