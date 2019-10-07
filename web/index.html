@@ -27,6 +27,7 @@
 
     <!--- CSS Source files -->
     <link rel="stylesheet" href="/src/css/master.css" >
+  
 
     <!--- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
@@ -52,6 +53,11 @@
 
   </head>
   <body>
+
+    <!-- Facebook JavaScripd-SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v4.0"></script>
+
     <!-- helper container for footer manipulation -->
     <div id="page-container">
       <!-- helper container for footer manipulation -->
@@ -59,7 +65,7 @@
       <!-- Heading -->
       <nav class="navbar">
         <div class="container">
-            <a href="https://icon-europe.community/"><span class="navbar-brand mb-0 h1"> <img src="src/img/icon-europe.png"></span></a>
+          <a href="https://icon-europe.community/"><span class="navbar-brand mb-0 h1"> <img src="src/img/icon-europe.png"></span></a>
           <button id="btn-wallet" type="button" class="btn btn-sm btn-outline-light">Connect to ICX wallet</button>
         </div>
       </nav>
@@ -134,6 +140,15 @@
         </div>
       </div>
 
+      <!-- Social Share Buttons -->
+      <div>
+        <ul id="share-ul" class="text-center">
+          <li>Share this page.</li>    
+            <div id="share-button" class="fb-share-button" data-href="https://vote.icon-europe.community/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvote.icon-europe.community%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Teilen</a></div>
+            <div><a id="share-button" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+          </ul>
+        </ul>
+      </div>
 
       <!-- Footer -->
       <footer class="pt-5" >
@@ -146,13 +161,5 @@
           <p id="copyright" class="m-0 text-center text-white">Copyright &copy; <a href="https://block42.tech/">block42 Blockchain Company</a> 2019</p>
         </div>
       </footer>
-
-      </div>
-
-
-
-
-
-    <div>
   </body>
 </html>

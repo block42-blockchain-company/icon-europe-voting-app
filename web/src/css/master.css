@@ -1,8 +1,8 @@
 /*
   Font
  */
-body{
-  font-family: 'Montserrat', sans-serif;
+body {
+  font-family: "Montserrat", sans-serif;
 }
 
 #page-container {
@@ -11,9 +11,8 @@ body{
 }
 
 #content-wrap {
-  padding-bottom: 12rem;    /* Footer height */
+  padding-bottom: 12rem; /* Footer height */
 }
-
 
 /*
   Navigation
@@ -23,7 +22,7 @@ nav {
 }
 
 nav span {
-  color : white;
+  color: white;
 }
 
 nav img {
@@ -31,7 +30,7 @@ nav img {
   width: auto;
 }
 
-#main-jumbotron{
+#main-jumbotron {
   background-color: #1aaaba !important;
   color: white;
 }
@@ -39,28 +38,42 @@ nav img {
 /*
   Table
  */
-.table tbody tr
-{
+.table tbody tr {
   cursor: pointer;
 }
-.table td:nth-child(5)
-{
+.table td:nth-child(5) {
   text-align: center;
 }
 
 /*
   Modal
  */
-#poll-modal .btn-group-answers{
+#poll-modal .btn-group-answers {
   width: 100%;
 }
 
-#poll-modal #btn-vote{
+#poll-modal #btn-vote {
   width: 80%;
 }
 
-#poll-modal .disabled{
+#poll-modal .disabled {
   cursor: not-allowed;
+}
+
+/* 
+  Social Share
+  */
+
+#share-ul {
+  list-style-type: none;
+  position: relative;
+}
+
+#social-button {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
 }
 
 /*
@@ -89,8 +102,7 @@ Toast
   height: 12rem;
 }
 
-footer .social
-{
+footer .social {
   height: 40px;
   width: 40px;
   margin-right: 5px;
@@ -103,7 +115,10 @@ footer .social
   color: gray !important;
 }
 
-#copyright a, #copyright a:hover, #copyright a:focus, #copyright a:active {
+#copyright a,
+#copyright a:hover,
+#copyright a:focus,
+#copyright a:active {
   color: gray !important;
   text-decoration: none;
 }
