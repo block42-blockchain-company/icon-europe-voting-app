@@ -61,19 +61,24 @@ class ScoreHandler():
         transaction = CallTransactionBuilder()\
                       .from_(self.wallet_.get_address())\
                       .to(self.score_address_)\
-                      .step_limit(10000000)\
                       .nid(3)\
                       .nonce(100)\
                       .method(method)\
                       .params(params)\
                       .build()
         print(transaction.method)
-        signed_transaction = SignedTransaction(transaction, self.wallet_)
+        estimation_step = self.estimateStep(transaction)
+        print(estimation_step)
+        signed_transaction = SignedTransaction(transaction, self.wallet_, estimation_step)
         tx_hash = self.icon_service.send_transaction(signed_transaction)
         time.sleep(10)
         result = self.icon_service.get_transaction_result(tx_hash)
         self.printResult(result, verbose)
         return result
+
+    def estimateStep(self, transaction):
+        estimate_step = self.icon_service.estimate_step(transaction)
+        return (estimate_step + 10000)
 
     def getLatestBlock(self) -> int:
         return self.icon_service.get_block('latest')
