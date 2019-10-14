@@ -1,5 +1,5 @@
 import * as constants from './constants.js';
-import { updateAlreadyVotedCol, storePolls } from './poll.js'
+import { updateAlreadyVotedCol, storePolls, getPollByID } from './poll.js'
 import * as cookieUtils from './cookieUtils.js';
 import Toast from './toast.js'
 
@@ -83,7 +83,6 @@ export default class IconHandler
                    .params(params)
                    .build();
 
-
     window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
         detail: {
             type: 'REQUEST_JSON-RPC',
@@ -95,9 +94,31 @@ export default class IconHandler
             }
         }
     }));
-
   }
+
+  async requestTxResult(txHash)
+  {
+    let result = await httpProvider.getTransactionResult(txHash)
+                                   .execute()
+                                   .catch( function(status){
+                                      if( status.search("[RPC ERROR]") >= 0 )
+                                        setTimeout(_instance.requestTxResult.bind(null, txHash), 2000);
+                                      else
+                                        return status;
+                                   });
+
+    if(result){
+      let event_name = result.eventLogs[0].indexed[0];
+      let event_logs = result.eventLogs[0];
+      if(event_name.search("VoteEvent") >= 0 )
+        logVoteDetails(parseInt(event_logs.data[1]), parseInt(event_logs.data[2]))
+
+    }
+  }
+
+
 }
+
 
 function bindWalletRequestButton()
 {
@@ -141,7 +162,7 @@ function responseWallet(ev)
   {
     $('#poll-modal').modal("hide");
 
-    console.log(response);
+    _instance.requestTxResult(response.payload.result);
 
     //fetch new data and update data
     setTimeout(function(){
@@ -151,4 +172,11 @@ function responseWallet(ev)
     }, 4000);
 
   }
+}
+
+function logVoteDetails( poll_id, answer_id)
+{
+  let poll = getPollByID(poll_id);
+  let toast_msg = "You successfully voted for: '" + poll.answers[answer_id].name + "'!"
+  new Toast(toast_msg, false);
 }

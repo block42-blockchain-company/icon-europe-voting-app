@@ -85,6 +85,6 @@ class VotingScore(IconScoreBase):
         if(sender_balance > 0):
             poll = Poll(json_loads(self.polls_.get(poll_id)), self.db)
             poll.vote(poll_answer_id, str(sender_address))
-            self.VoteEvent(sender_address, poll_answer_id, poll_answer_id)
+            self.VoteEvent(sender_address, poll_id, poll_answer_id)
         else:
             revert("Throw some fking exception. Like ´no funds, my dear´")

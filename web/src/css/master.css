@@ -66,7 +66,6 @@ nav img {
 /*
 Toast
 */
-
 .toast{
   position: fixed;
   bottom: 5em;
@@ -75,6 +74,7 @@ Toast
   z-index: 99;
   background-color: #1aaaba !important;
   color: white;
+  text-align: center;
 }
 .toast span{
   color: white;
