@@ -103,10 +103,9 @@ export default class IconHandler
                                    .catch( function(status){
                                       if( status.search("[RPC ERROR]") >= 0 )
                                         setTimeout(_instance.requestTxResult.bind(null, txHash), 2000);
-                                      else
-                                        return status;
                                    });
 
+    console.log(result);
     if(result){
       let event_name = result.eventLogs[0].indexed[0];
       let event_logs = result.eventLogs[0];
@@ -162,9 +161,10 @@ function responseWallet(ev)
   {
     $('#poll-modal').modal("hide");
 
-    _instance.requestTxResult(response.payload.result);
+    //
+    setTimeout(_instance.requestTxResult.bind(null,response.payload.result), 2000);
 
-    //fetch new data and update data
+    // fetch new data and update data
     setTimeout(function(){
       _instance.requestScoreReadMethod("exportPolls", {})
       .then(storePolls)

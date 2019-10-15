@@ -2,19 +2,18 @@ export default class Toast
 {
   constructor(msg, autohide = true, delay = 3000)
   {
+    if( document.getElementsByClassName("toast")[0] )
+      document.getElementsByClassName("toast")[0].remove();
+
     let toast = this.createToastBody(msg, autohide, delay);
     document.getElementsByTagName("body")[0].appendChild(toast);
 
     $('.toast').toast('show');
   }
 
-  /* 🤮*/
+  /* 🤮 that's just some ugly code.. feel free to re-write :) */
   createToastBody(message, autohide, delay)
   {
-    let toast_container = document.createElement("div");
-    toast_container.setAttribute("aria-live", "polite");
-    toast_container.setAttribute("aria-atomic", "true");
-
     let toast_main = document.createElement("div");
     toast_main.setAttribute("class", "toast");
     toast_main.setAttribute("data-delay", "3000");
@@ -43,8 +42,7 @@ export default class Toast
 
     toast_body.appendChild(document.createTextNode(message))
     toast_main.appendChild(toast_body);
-    toast_container.appendChild(toast_main);
 
-    return toast_container
+    return toast_main
   }
 }
