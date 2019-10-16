@@ -11,7 +11,7 @@ body{
 }
 
 #content-wrap {
-  padding-bottom: 12rem;    /* Footer height */
+  padding-bottom: 18rem;    /* Footer height */
 }
 
 
@@ -86,10 +86,10 @@ Toast
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 12rem;
+  height: 18rem;
 }
 
-footer .social
+footer .own-social-media
 {
   height: 40px;
   width: 40px;
