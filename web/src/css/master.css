@@ -66,7 +66,6 @@ nav img {
 /*
 Toast
 */
-
 .toast{
   position: fixed;
   bottom: 5em;
@@ -75,6 +74,7 @@ Toast
   z-index: 99;
   background-color: #1aaaba !important;
   color: white;
+  text-align: center;
 }
 .toast span{
   color: white;
@@ -106,4 +106,23 @@ footer .own-social-media
 #copyright a, #copyright a:hover, #copyright a:focus, #copyright a:active {
   color: gray !important;
   text-decoration: none;
+}
+
+/*
+Cookie agreements
+*/
+#cookie-agreements{
+  position: absolute;
+  bottom: 0;
+}
+
+#cookie-agreements .alert-cookies{
+  opacity: .95;
+  font-weight: 500;
+}
+
+#cookie-agreements .alert-cookies  p{
+  padding: 0;
+  margin: 0;
+  text-align: center;
 }

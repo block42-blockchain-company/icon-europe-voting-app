@@ -7,7 +7,6 @@ export default class Poll
 {
   constructor( poll_data )
   {
-    console.log(poll_data);
     this.id = parseInt(poll_data.id);
     this.name = poll_data.name;
     this.question = poll_data.question;
@@ -201,7 +200,7 @@ export function storePolls( polls_data )
     polls.push(new Poll(polls_data[it]));
 }
 
-function getPollByID( poll_id )
+export function getPollByID( poll_id )
 {
   for( let obj in polls)
     if(polls[obj].id === poll_id)

@@ -1,3 +1,5 @@
+import * as constants from './constants.js';
+
 export function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -19,3 +21,8 @@ export function getCookie(cname) {
   }
   return "";
 }
+
+export function renderCookiesAgreement(){
+  if (getCookie(constants.COOKIE_NAME_WALLET_ADDRESS) == "")
+    document.getElementById("cookie-agreements").classList.remove("d-none");
+} 

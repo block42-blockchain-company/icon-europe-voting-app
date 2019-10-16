@@ -5,7 +5,7 @@
 import sys, json, os
 
 script_path = os.path.dirname(os.path.realpath(sys.argv[0]))
-root_dir_path = os.path.normpath(script_path + (os.sep + os.pardir) * 3)
+root_dir_path = os.path.normpath(script_path + (os.sep + os.pardir))
 
 testnet_uri = "https://bicon.net.solidwallet.io/api/v3"
 local_uri = "http://localhost:9000/api/v3"
