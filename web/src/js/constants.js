@@ -1,7 +1,7 @@
 import {config} from './config/config.js';
 
 //score_address
-export const SCORE_ADDRESS = "cx02716d61c742fa219a5f0e9fa9d98ae56e5a9075"
+export const SCORE_ADDRESS = "cx1ed1f96cc391ad3a95ee07b82572a53287071a44"
 export const TEST_SCORE_ADDRESS = config.test_score_address;
 
 // URLS

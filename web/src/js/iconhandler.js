@@ -115,7 +115,11 @@ export default class IconHandler
     }
   }
 
-
+  async blockHeightToDate(block_height)
+  {
+    let block = await httpProvider.getBlock(block_height).execute();
+    return new Date( new Date().toUTCString(block.timeStamp) );
+  }
 }
 
 
