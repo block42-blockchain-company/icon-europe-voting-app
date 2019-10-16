@@ -11,14 +11,14 @@ export default class Poll
     this.name = poll_data.name;
     this.question = poll_data.question;
     this.start_date = poll_data.time_frame.start;
-    this.end_date = poll_data.time_frame.end;
+    this.end_date = this.calculateEndDate(poll_data.time_frame.end);
     this.description = poll_data.description;
     this.answers = this.addAnswers( poll_data.answers );
     this.initiator = poll_data.initiator;
     this.votes = poll_data.voters;
   }
 
-  renderListView()
+  async renderListView()
   {
     let tbody = constants.TABLE.getElementsByTagName("tbody")[0];
     let row = tbody.insertRow();
@@ -171,15 +171,48 @@ export default class Poll
   {
     return parseInt(Object.keys(this.votes[IconHandler.instance.wallet])[0]);
   }
+
+  calculateEndDate(hexBlockHeight) {
+    //let genesisBlockMilliseconds = 1536931246000;
+    let referenceBlockMilliseconds = 1571232274000
+    let referenceBlock_BlockHeight = 4720888
+    let integerBlockHeight = parseInt(hexBlockHeight, 16);
+    let blockHeightDelta = integerBlockHeight - referenceBlock_BlockHeight
+    let pollClosedBlockSeconds = (blockHeightDelta * 2000) + referenceBlockMilliseconds;
+    let date = new Date(pollClosedBlockSeconds)
+    return formatDate(date)
+  }
+}
+
+function formatDate(date) {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  
+  return monthNames[date.getUTCMonth()] + " " +
+    ("0" + date.getUTCDate()).slice(-2) + " " +
+    date.getUTCFullYear()
+}
+
+async function updateStartDate() {
+  for( let it in polls )
+  {
+    polls[it].start_date = await IconHandler.instance.blockHeightToDate(polls[it].start_date);
+  }
+
+  for( let it in polls )
+  {
+    let createdTime = document.getElementById("poll-" + polls[it].id).children[1];
+    let date = polls[it].start_date;
+    createdTime.innerHTML = formatDate(date)
+  }
 }
 
 export function updateAlreadyVotedCol()
 {
-  let t_body = constants.TABLE.getElementsByTagName("tbody")[0]
-
   for( let it in polls )
   {
-    // add '✕' or '✔' to a row
+    // add '✕' or 'answer' to a row
     let badge = document.getElementById("poll-" + polls[it].id).children[4].firstChild;
     badge.innerHTML = ( polls[it].hasUserVoted())
     ? polls[it].answers[polls[it].getUserVote()].name
@@ -191,6 +224,7 @@ export function renderPolls()
 {
   for( var it in polls)
     polls[it].renderListView()
+  updateStartDate()
 }
 
 export function storePolls( polls_data )
