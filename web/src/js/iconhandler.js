@@ -105,13 +105,11 @@ export default class IconHandler
                                         setTimeout(_instance.requestTxResult.bind(null, txHash), 2000);
                                    });
 
-    console.log(result);
     if(result){
       let event_name = result.eventLogs[0].indexed[0];
       let event_logs = result.eventLogs[0];
       if(event_name.search("VoteEvent") >= 0 )
         logVoteDetails(parseInt(event_logs.data[1]), parseInt(event_logs.data[2]))
-
     }
   }
 
@@ -121,7 +119,6 @@ export default class IconHandler
     return new Date( new Date().toUTCString(block.timeStamp) );
   }
 }
-
 
 function bindWalletRequestButton()
 {

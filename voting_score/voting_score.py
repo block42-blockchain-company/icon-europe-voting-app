@@ -52,9 +52,10 @@ class VotingScore(IconScoreBase):
 
     @external
     def removeAllPolls(self) -> None:
-        for it in range(len(self.polls_)):
-            Poll.removeVotes(it, self.db)
-            self.polls_.pop()
+        if self.msg.sender == self.owner:
+            for it in range(len(self.polls_)):
+                Poll.removeVotes(it, self.db)
+                self.polls_.pop()
 
     @external( readonly=True)
     def exportPolls(self) -> list:
