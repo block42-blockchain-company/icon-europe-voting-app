@@ -63,6 +63,36 @@ nav img {
   cursor: not-allowed;
 }
 
+#poll-modal .chart-canvas{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#poll-modal .chart-canvas #chart{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#poll-modal .chart-canvas .overlay-canvas{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+#poll-modal .chart-canvas .overlay-canvas span{
+  display: block;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+#poll-modal .inner-half{
+  padding: 0 3em;
+}
+
 /*
 Toast
 */

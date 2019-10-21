@@ -105,7 +105,6 @@ export default class IconHandler
                                         setTimeout(_instance.requestTxResult.bind(null, txHash), 2000);
                                    });
 
-    console.log(result);
     if(result){
       let event_name = result.eventLogs[0].indexed[0];
       let event_logs = result.eventLogs[0];

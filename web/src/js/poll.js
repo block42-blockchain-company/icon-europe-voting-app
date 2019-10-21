@@ -2,6 +2,8 @@ import IconHandler from './iconhandler.js'
 import * as constants from './constants.js';
 
 let polls = []; //stores all polls created
+let chart = null;
+
 
 export default class Poll
 {
@@ -84,6 +86,8 @@ export default class Poll
       options_list.appendChild(button);
     }
 
+    poll.showStats( Object.values(poll.votes) , poll.answers );
+
     vote_button.DOM.addEventListener("click", poll.vote);
     vote_button.disableVote();
 
@@ -162,6 +166,48 @@ export default class Poll
     return answers_data;
   }
 
+  showStats( votes, answers )
+  {
+    let cnv = document.getElementById('chart');
+    clearPrevStats(cnv);
+
+    if(votes.length)
+    {
+      let sum, vote_percentages = {}, labels = [];
+
+      sum = votes.reduce( ( sum_, el ) => { return sum_ + parseInt(Object.values(el)[0]) }, 0);
+
+      votes.forEach((el, it) => {
+        let key = answers[Object.keys(el)[0]].name;
+        let percentage = ((parseInt(Object.values(el)[0]) / sum) * 100);
+        percentage = Math.round( percentage * 10) / 10;
+
+        (key in vote_percentages)
+        ? vote_percentages[key] += percentage
+        : vote_percentages[key] = percentage;
+      });
+
+      chart = new Chart( cnv , {
+      type: 'doughnut',
+      data: {
+          labels: Object.keys(vote_percentages),
+          datasets: [{
+              label: '% of Votes',
+              data: Object.values(vote_percentages),
+              backgroundColor: constants.CHART_COLORS,
+              borderWidth: 3
+          }]
+        },
+        options : {
+          responsive: true,
+          maintainAspectRatio: false,
+        }
+      });
+    }
+    else
+      createCanvasOverlay();
+  }
+
   hasUserVoted()
   {
     return this.votes.hasOwnProperty(IconHandler.instance.wallet);
@@ -188,7 +234,7 @@ function formatDate(date) {
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
-  
+
   return monthNames[date.getUTCMonth()] + " " +
     ("0" + date.getUTCDate()).slice(-2) + " " +
     date.getUTCFullYear()
@@ -218,6 +264,31 @@ export function updateAlreadyVotedCol()
     ? polls[it].answers[polls[it].getUserVote()].name
     : '&#10005';
   }
+}
+
+function clearPrevStats( canvas )
+{
+  if(chart != null)
+  {
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+    chart.destroy();
+  }
+
+  if(document.getElementsByClassName("overlay-canvas").length)
+    document.getElementsByClassName("overlay-canvas")[0].remove();
+}
+
+
+function createCanvasOverlay()
+{
+  let overlay_div = document.createElement("div");
+  overlay_div.setAttribute("class", "overlay-canvas");
+  let span = document.createElement("span");
+  span.innerHTML = "Statistics not available. <br> No votes yet."
+
+  overlay_div.appendChild(span);
+  document.getElementsByClassName("chart-canvas")[0].appendChild(overlay_div);
 }
 
 export function renderPolls()
